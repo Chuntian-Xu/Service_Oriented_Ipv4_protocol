@@ -42,7 +42,6 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
 	2. 如果源文件中没有对应的路径,则根据程序文件夹中程序文件所在路径新建文件夹,然后将程序拷贝进去;
 	3. 重新build整个源文件
 	4. 运行文件tutorials/configurator/beifen_omnetpp_udp.ini,即可在输出的log中看到打印出来的Service Id Table 
-	
-# 注意:
-	1. 一定要按照程序文件中相应的路径拷贝和替换源程序文件,因为Service Id Table 的功能实现不仅仅包含新建出来的程序文件,还需要对一些原有的源文件进行修改,修改过的程序文件均在程序文件夹中,直接替换掉原文件即可
-	2. 程序已在Github开源,下载地址: https://github.com/Chuntian-Xu/omnetpp-inet__Service-Id-Table
+
+
+# 声明: 仅用于学术目的,如需引用程序,请先征求作者同意
