@@ -44,4 +44,4 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
 	4. 运行文件tutorials/configurator/beifen_omnetpp_udp.ini,即可在输出的log中看到打印出来的Service Id Table 
 
 
-# 声明: 仅用于学术目的,如需引用程序,请先征求作者同意
+# 声明: 如需引用程序, 请先征求作者同意
