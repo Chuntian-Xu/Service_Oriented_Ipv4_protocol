@@ -1,5 +1,50 @@
 <config>
-	<interface among="host{0-2} router0" address="10.0.0.x"/>
-	<interface among="host{3-5} router1" address="10.0.1.x"/>
-	<interface hosts="router*" address="10.1.x.x"/>
+   <interface hosts="beifenConfiguratorC.area1lan1host1" names="wlan0" address="10.1.1.1" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area1lan1host2" names="wlan0" address="10.1.1.2" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area1lan1host3" names="wlan0" address="10.1.1.3" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area1router" names="eth1" address="10.1.1.4" netmask="255.255.255.248" metric="200"/>
+   <interface hosts="beifenConfiguratorC.area2lan1host1" names="wlan0" address="10.2.1.1" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area2lan1host2" names="wlan0" address="10.2.1.2" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area2lan1host3" names="wlan0" address="10.2.1.3" netmask="255.255.255.248" metric="1"/>
+   <interface hosts="beifenConfiguratorC.area2router" names="eth1" address="10.2.1.4" netmask="255.255.255.248" metric="200"/>
+   <interface hosts="beifenConfiguratorC.area1router" names="eth0" address="10.1.3.2" netmask="255.255.255.252" metric="200"/>
+   <interface hosts="beifenConfiguratorC.backbonerouter" names="eth1" address="10.1.3.1" netmask="255.255.255.252" metric="200"/>
+   <interface hosts="beifenConfiguratorC.area2router" names="eth0" address="10.2.3.2" netmask="255.255.255.252" metric="200"/>
+   <interface hosts="beifenConfiguratorC.backbonerouter" names="eth0" address="10.2.3.1" netmask="255.255.255.252" metric="200"/>
+   <multicast-group hosts="beifenConfiguratorC.area1lan1host1" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area1lan1host2" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area1lan1host3" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area1router" interfaces="eth1" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="beifenConfiguratorC.area2lan1host1" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area2lan1host2" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area2lan1host3" interfaces="wlan0" address="224.0.0.1"/>
+   <multicast-group hosts="beifenConfiguratorC.area2router" interfaces="eth1" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="beifenConfiguratorC.area1router" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="beifenConfiguratorC.backbonerouter" interfaces="eth1" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="beifenConfiguratorC.area2router" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="beifenConfiguratorC.backbonerouter" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <wireless interfaces="beifenConfiguratorC.area1lan1host1%wlan0 beifenConfiguratorC.area1lan1host2%wlan0 beifenConfiguratorC.area1lan1host3%wlan0 "/>
+   <wireless interfaces="beifenConfiguratorC.area2lan1host1%wlan0 beifenConfiguratorC.area2lan1host2%wlan0 beifenConfiguratorC.area2lan1host3%wlan0 "/>
+   <route hosts="beifenConfiguratorC.area1lan1host1" destination="10.1.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1lan1host1" destination="*" netmask="*" gateway="10.1.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1lan1host2" destination="10.1.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1lan1host2" destination="*" netmask="*" gateway="10.1.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1lan1host3" destination="10.1.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1lan1host3" destination="*" netmask="*" gateway="10.1.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host1" destination="10.2.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host1" destination="*" netmask="*" gateway="10.2.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host2" destination="10.2.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host2" destination="*" netmask="*" gateway="10.2.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host3" destination="10.2.1.0" netmask="255.255.255.248" gateway="*" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2lan1host3" destination="*" netmask="*" gateway="10.2.1.4" interface="wlan0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1router" destination="10.1.3.1" netmask="255.255.255.255" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1router" destination="10.1.1.0" netmask="255.255.255.248" gateway="*" interface="eth1" metric="0"/>
+   <route hosts="beifenConfiguratorC.area1router" destination="10.2.0.0" netmask="255.255.252.0" gateway="10.1.3.1" interface="eth0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2router" destination="10.2.3.1" netmask="255.255.255.255" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2router" destination="10.2.1.0" netmask="255.255.255.248" gateway="*" interface="eth1" metric="0"/>
+   <route hosts="beifenConfiguratorC.area2router" destination="10.1.0.0" netmask="255.255.252.0" gateway="10.2.3.1" interface="eth0" metric="0"/>
+   <route hosts="beifenConfiguratorC.backbonerouter" destination="10.1.3.2" netmask="255.255.255.255" gateway="*" interface="eth1" metric="0"/>
+   <route hosts="beifenConfiguratorC.backbonerouter" destination="10.2.3.2" netmask="255.255.255.255" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="beifenConfiguratorC.backbonerouter" destination="10.1.1.0" netmask="255.255.255.248" gateway="10.1.3.2" interface="eth1" metric="0"/>
+   <route hosts="beifenConfiguratorC.backbonerouter" destination="10.2.1.0" netmask="255.255.255.248" gateway="10.2.3.2" interface="eth0" metric="0"/>
 </config>

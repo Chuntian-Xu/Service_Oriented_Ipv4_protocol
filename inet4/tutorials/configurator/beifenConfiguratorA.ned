@@ -15,9 +15,7 @@ import inet.node.ethernet.Eth10M;
 network beifenConfiguratorA {
     @display("bgb=1610.5125,874.96497");
     submodules:
-		// the network node's configurator module
-		// This module has one instance per network node, and it acts like a bridge between the node and the network's global configurator module, Ipv4NetworkConfigurator.
-        configurator_Node: Ipv4NetworkConfigurator {
+        configurator: Ipv4NetworkConfigurator {
             @display("p=129.12,98.8575");
         }
         visualizer: IntegratedCanvasVisualizer {

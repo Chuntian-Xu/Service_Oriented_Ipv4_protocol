@@ -1067,7 +1067,7 @@ void Ipv4NetworkConfigurator::readMulticastGroupConfiguration(Topology& topology
 void Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) {
 //    EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) \n"; // new added
     // configuration在NetworkConfiguratorBase::initialize(int stage)定义
-    cXMLElementList routeElements = configuration->getChildrenByTagName("routee");
+    cXMLElementList routeElements = configuration->getChildrenByTagName("route");
     for (auto & routeElement : routeElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*routeElement, "hosts");
         const char *destinationAttr = xmlutils::getMandatoryFilledAttribute(*routeElement, "destination");    // destination address  (L3AddressResolver syntax)
@@ -1392,7 +1392,7 @@ bool Ipv4NetworkConfigurator::containsRoute(const std::vector<Ipv4Route *>& rout
 
 // ^-^ 当addStaticRoutesParameter为true时被调用
 void Ipv4NetworkConfigurator::addStaticRoutes(Topology& topology, cXMLElement *autorouteElement) {
-    EV_INFO<<"Ipv4NetworkConfigurator::addStaticRoutes(Topology& topology, cXMLElement *autorouteElement)\n";
+//    EV_INFO<<"Ipv4NetworkConfigurator::addStaticRoutes(Topology& topology, cXMLElement *autorouteElement)\n"; // new added
     // set node weights
     const char *metric = autorouteElement->getAttribute("metric");
     if (metric == nullptr)

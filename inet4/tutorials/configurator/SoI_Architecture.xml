@@ -1,40 +1,37 @@
 <config>
    <interface hosts="SoI_Architecture.ServiceClient0" names="eth0" address="10.0.0.1" netmask="255.255.255.248" metric="20"/>
-   <interface hosts="SoI_Architecture.MobileStation" names="eth0" address="10.0.0.4" netmask="255.255.255.248" metric="20"/>
    <interface hosts="SoI_Architecture.ServiceClient1" names="eth0" address="10.0.0.2" netmask="255.255.255.248" metric="20"/>
    <interface hosts="SoI_Architecture.ServiceClient2" names="eth0" address="10.0.0.3" netmask="255.255.255.248" metric="20"/>
+   <interface hosts="SoI_Architecture.MobileStation" names="eth0" address="10.0.0.4" netmask="255.255.255.248" metric="20"/>
+   
    <interface hosts="SoI_Architecture.Server0" names="eth0" address="205.193.114.1" netmask="255.255.255.248" metric="20"/>
-   <interface hosts="SoI_Architecture.ShoreStation" names="eth0" address="205.193.114.4" netmask="255.255.255.248" metric="20"/>
    <interface hosts="SoI_Architecture.Server1" names="eth0" address="205.193.114.2" netmask="255.255.255.248" metric="20"/>
    <interface hosts="SoI_Architecture.Server2" names="eth0" address="205.193.114.3" netmask="255.255.255.248" metric="20"/>
+   <interface hosts="SoI_Architecture.ShoreStation" names="eth0" address="205.193.114.4" netmask="255.255.255.248" metric="20"/>
+   
    <interface hosts="SoI_Architecture.MobileStation" names="wlan0" address="120.198.203.28" netmask="255.255.255.252" metric="20"/>
    <interface hosts="SoI_Architecture.ShoreStation" names="wlan0" address="132.255.168.62" netmask="255.255.255.252" metric="20"/>
-   <multicast-group hosts="SoI_Architecture.ServiceClient0" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.MobileStation" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
-   <multicast-group hosts="SoI_Architecture.ServiceClient1" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.ServiceClient2" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.Server0" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.ShoreStation" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
-   <multicast-group hosts="SoI_Architecture.Server1" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.Server2" interfaces="eth0" address="224.0.0.1"/>
-   <multicast-group hosts="SoI_Architecture.MobileStation" interfaces="wlan0" address="224.0.0.1 224.0.0.2"/>
-   <multicast-group hosts="SoI_Architecture.ShoreStation" interfaces="wlan0" address="224.0.0.1 224.0.0.2"/>
+   
    <wireless interfaces="SoI_Architecture.MobileStation%wlan0 SoI_Architecture.ShoreStation%wlan0"/>
+   
    <route hosts="SoI_Architecture.ServiceClient0" destination="10.0.0.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.ServiceClient0" destination="*" netmask="*" gateway="10.0.0.4" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.ServiceClient1" destination="10.0.0.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.ServiceClient1" destination="*" netmask="*" gateway="10.0.0.4" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.ServiceClient2" destination="10.0.0.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.ServiceClient2" destination="*" netmask="*" gateway="10.0.0.4" interface="eth0" metric="0"/>
+   
    <route hosts="SoI_Architecture.Server0" destination="205.193.114.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.Server0" destination="*" netmask="*" gateway="205.193.114.4" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.Server1" destination="205.193.114.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.Server1" destination="*" netmask="*" gateway="205.193.114.4" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.Server2" destination="205.193.114.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.Server2" destination="*" netmask="*" gateway="205.193.114.4" interface="eth0" metric="0"/>
+   
    <route hosts="SoI_Architecture.MobileStation" destination="132.255.168.62" netmask="255.255.255.255" gateway="*" interface="wlan0" metric="0"/>
    <route hosts="SoI_Architecture.MobileStation" destination="10.0.0.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
    <route hosts="SoI_Architecture.MobileStation" destination="205.193.114.0" netmask="255.255.255.248" gateway="132.255.168.62" interface="wlan0" metric="0"/>
+   
    <route hosts="SoI_Architecture.ShoreStation" destination="120.198.203.28" netmask="255.255.255.255" gateway="*" interface="wlan0" metric="0"/>
    <route hosts="SoI_Architecture.ShoreStation" destination="10.0.0.0" netmask="255.255.255.248" gateway="120.198.203.28" interface="wlan0" metric="0"/>
    <route hosts="SoI_Architecture.ShoreStation" destination="205.193.114.0" netmask="255.255.255.248" gateway="*" interface="eth0" metric="0"/>
