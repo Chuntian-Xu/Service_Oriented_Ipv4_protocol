@@ -143,7 +143,7 @@ void Ipv4NetworkConfigurator::dumpConfiguration() {
     if (!isEmpty(par("dumpConfig"))) TIME(dumpConfig(topology));
 
     // print sids to module output
-    if (par("dumpSids")) TIME(dumpSids(topology));
+    if (par("dumpSids")) TIME(dumpSids(topology)); // new added
 }
 
 void Ipv4NetworkConfigurator::configureAllInterfaces() {
@@ -868,8 +868,7 @@ void Ipv4NetworkConfigurator::dumpConfig(Topology& topology) {
     const char *filename = par("dumpConfig");
     inet::utils::makePathForFile(filename);
     f = fopen(filename, "w");
-    if (!f)
-        throw cRuntimeError("Cannot write configurator output file");
+    if (!f) throw cRuntimeError("Cannot write configurator output file");
     fprintf(f, "<config>\n");
 
     // interfaces
@@ -995,8 +994,7 @@ void Ipv4NetworkConfigurator::dumpConfig(Topology& topology) {
                     stream << "\" parent=\"" << route->getInInterface()->getInterface()->getInterfaceName();
                 stream << "\" children=\"";
                 for (unsigned int k = 0; k < route->getNumOutInterfaces(); k++) {
-                    if (k)
-                        stream << " ";
+                    if (k) stream << " ";
                     stream << route->getOutInterface(k)->getInterface()->getInterfaceName();
                 }
                 stream << "\" metric=\"" << route->getMetric() << "\"/>" << endl;
@@ -1005,6 +1003,28 @@ void Ipv4NetworkConfigurator::dumpConfig(Topology& topology) {
         }
     }
 
+    // sids
+    for (int i = 0; i < topology.getNumNodes(); i++) {  // new added
+        Node *node = (Node *)topology.getNode(i);
+        IIpv4SidTable *sidTable = dynamic_cast<IIpv4SidTable *>(node->sidTable);
+        if (sidTable) {
+            for (int j = 0; j < sidTable->getNumSids(); j++) {
+                Ipv4Sid *sid = sidTable->getSid(j);
+                std::stringstream stream;
+                Ipv4Address IpAddress = sid->getIpaddr();
+                ServiceId ServiceId = sid->getSid();
+                stream << "   <sid hosts=\"" << node->module->getFullPath();
+                stream << "\" ipaddr=\"";
+                if (sid->getIpaddr().isUnspecified()) stream << "*";
+                else stream << sid->getIpaddr();
+                stream << "\" Service Id=\"";
+                if (sid->getSid().isUnspecified()) stream << "*";
+                else stream << sid->getSid();
+                stream <<"\"/>" << endl;
+                fprintf(f, "%s", stream.str().c_str());
+            }
+        }
+    }
     fprintf(f, "</config>");
     fflush(f);
     fclose(f);
