@@ -37,7 +37,7 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
 		src/inet/networklayer/configurator/ipv4/Ipv4NetworkConfigurator.h
 		src/inet/networklayer/configurator/ipv4/Ipv4NetworkConfigurator.cc
 
-# usage:
+# Usage:
 1. Copy the program files in the program folder to the same folder as the complete INET module source file path;
 2. If there is no corresponding path in the source file, create a new folder according to the path of the program file in the program folder, and then copy the program into it;
 3. Rebuild
