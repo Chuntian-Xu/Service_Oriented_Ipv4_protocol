@@ -42,4 +42,4 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
 2. If there is no corresponding path in the source file, create a new folder according to the path of the program file in the program folder, and then copy the program into it;
 3. Rebuild
 
-# Notice: To quote the program, the author's permission is required
+# Notice: If you want to use this code for further development, please contact the author for approval!
