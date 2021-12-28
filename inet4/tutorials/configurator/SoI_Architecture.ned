@@ -7,7 +7,7 @@ import inet.visualizer.integrated.IntegratedCanvasVisualizer;
 import inet.physicallayer.unitdisk.UnitDiskRadioMedium;
 
 import inet.node.inet.MyStandardHost_Udp_Ipv4;
-import inet.node.inet.MyRouter_Udp_Ipv4_Wireless;
+import inet.node.inet.MyRouter_Udp_Ipv4_Wireless_Station;
 import inet.node.ethernet.EtherSwitch;
 
 import inet.node.ethernet.Eth100M;
@@ -53,10 +53,10 @@ network SoI_Architecture {
             @display("p=1090.05,447.85004");
         }
 
-        MobileStation: MyRouter_Udp_Ipv4_Wireless {
+        MobileStation: MyRouter_Udp_Ipv4_Wireless_Station {
             @display("p=620.23004,449.54004");
         }
-        ShoreStation: MyRouter_Udp_Ipv4_Wireless {
+        ShoreStation: MyRouter_Udp_Ipv4_Wireless_Station {
             @display("p=946.4001,449.54004");
         }
     connections:
