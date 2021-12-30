@@ -18,6 +18,7 @@ class INET_API ServiceId {
     // Service Id is encoded in a single uint16 in host byte order
     // (e.g. DEC(6800) <=> BIN(00011010 10010000) <=> HEX(0x1A90) <=>"26.144")
     uint16 addr;
+
   protected:
     // Parses ServiceId into the given bytes, and returns true if syntax was OK.
     static bool parseServiceId(const char *text, unsigned char tobytes[]);

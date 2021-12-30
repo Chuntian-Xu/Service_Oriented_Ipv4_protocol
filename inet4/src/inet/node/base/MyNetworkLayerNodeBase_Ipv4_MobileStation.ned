@@ -1,11 +1,11 @@
-// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_Service.ned
+// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_MobileStation.ned
 
 package inet.node.base;
 
 import inet.common.MessageDispatcher;
 import inet.networklayer.contract.INetworkLayer;  
 
-module MyNetworkLayerNodeBase_Ipv4_Service extends LinkLayerNodeBase {
+module MyNetworkLayerNodeBase_Ipv4_MobileStation extends LinkLayerNodeBase {
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
@@ -14,7 +14,7 @@ module MyNetworkLayerNodeBase_Ipv4_Service extends LinkLayerNodeBase {
         @figure[networkLayer](type=rectangle; pos=250,306; size=1000,130; fillColor=#00ff00; lineColor=#808080; cornerRadius=5; fillOpacity=0.1);
         @figure[networkLayer.title](type=text; pos=1245,311; anchor=ne; text="network layer");
     submodules:
-        ipv4: <default("Ipv4NetworkLayerService")> like INetworkLayer {  // Ipv4NetworkLayerService module  // new added
+        ipv4: <default("Ipv4NetworkLayerMobileStation")> like INetworkLayer {  // Ipv4NetworkLayerMobileStation module  // new added
             parameters:
                 @display("p=663,341.9;q=queue");
         }

@@ -1,19 +1,20 @@
+// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_ShoreStation.ned
+
 package inet.node.base;
 
 import inet.common.MessageDispatcher;
-import inet.networklayer.contract.INetworkLayer;  // !!!!!!*******  inet.networklayer.contract.INetworkLayer.ned
+import inet.networklayer.contract.INetworkLayer;  
 
-module MyNetworkLayerNodeBase_Ipv4 extends LinkLayerNodeBase
-{
+module MyNetworkLayerNodeBase_Ipv4_ShoreStation extends LinkLayerNodeBase {
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
-        *.forwarding = forwarding;   // 报文转发开关
+        *.forwarding = forwarding;  
         *.multicastForwarding = multicastForwarding;
         @figure[networkLayer](type=rectangle; pos=250,306; size=1000,130; fillColor=#00ff00; lineColor=#808080; cornerRadius=5; fillOpacity=0.1);
         @figure[networkLayer.title](type=text; pos=1245,311; anchor=ne; text="network layer");
     submodules:
-        ipv4: <default("Ipv4NetworkLayer")> like INetworkLayer {  // !!!!!!*******  /inet/networklayer/ipv4/Ipv4NetworkLayer.ned
+        ipv4: <default("Ipv4NetworkLayerShoreStation")> like INetworkLayer {  // Ipv4NetworkLayerMobileStation module  // new added
             parameters:
                 @display("p=663,341.9;q=queue");
         }
@@ -50,3 +51,4 @@ module MyNetworkLayerNodeBase_Ipv4 extends LinkLayerNodeBase
             vlan[i].upperLayerIn <-- nl.out++;
         }
 }
+

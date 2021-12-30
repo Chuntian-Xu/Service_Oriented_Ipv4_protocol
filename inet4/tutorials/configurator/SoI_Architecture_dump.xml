@@ -41,6 +41,12 @@
    <sid hosts="SoI_Architecture.MobileStation" ipaddr="10.0.0.1" Service Id="10.1"/>
    <sid hosts="SoI_Architecture.MobileStation" ipaddr="10.0.0.2" Service Id="10.2"/>
    <sid hosts="SoI_Architecture.MobileStation" ipaddr="10.0.0.3" Service Id="10.3"/>
+   <sid hosts="SoI_Architecture.MobileStation" ipaddr="205.193.114.1" Service Id="20.1"/>
+   <sid hosts="SoI_Architecture.MobileStation" ipaddr="205.193.114.2" Service Id="20.2"/>
+   <sid hosts="SoI_Architecture.MobileStation" ipaddr="205.193.114.3" Service Id="20.3"/>
+   <sid hosts="SoI_Architecture.ShoreStation" ipaddr="10.0.0.1" Service Id="10.1"/>
+   <sid hosts="SoI_Architecture.ShoreStation" ipaddr="10.0.0.2" Service Id="10.2"/>
+   <sid hosts="SoI_Architecture.ShoreStation" ipaddr="10.0.0.3" Service Id="10.3"/>
    <sid hosts="SoI_Architecture.ShoreStation" ipaddr="205.193.114.1" Service Id="20.1"/>
    <sid hosts="SoI_Architecture.ShoreStation" ipaddr="205.193.114.2" Service Id="20.2"/>
    <sid hosts="SoI_Architecture.ShoreStation" ipaddr="205.193.114.3" Service Id="20.3"/>

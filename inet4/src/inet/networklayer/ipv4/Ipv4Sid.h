@@ -19,11 +19,11 @@ class IIpv4SidTable;
 class INET_API Ipv4Sid : public cObject, public ISid {
   private:
     IIpv4SidTable *rt;
-    Ipv4Address ipaddr;
-    ServiceId sid;
     InterfaceEntry *interfacePtr;    ///< interface
     SourceType sourceType;    ///< manual, routing prot, etc.
     unsigned int adminDist;    ///< Cisco like administrative distance
+    Ipv4Address ipaddr;
+    ServiceId sid;
 
   private:
     // copying not supported: following are private and also left undefined
@@ -34,7 +34,7 @@ class INET_API Ipv4Sid : public cObject, public ISid {
     void changed(int fieldCode);
 
   public:
-    Ipv4Sid():rt(nullptr),interfacePtr(nullptr),sourceType(MANUAL),adminDist(dUnknown),ipaddr(){}
+    Ipv4Sid():rt(nullptr),interfacePtr(nullptr),sourceType(MANUAL),adminDist(dUnknown),ipaddr(),sid(){}
     virtual ~Ipv4Sid();
     virtual std::string str() const override;
     virtual std::string detailedInfo() const OMNETPP5_CODE(override);
