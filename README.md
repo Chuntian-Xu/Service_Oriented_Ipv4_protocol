@@ -63,6 +63,8 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
                 
         9. Base Node of Network framework:
         src/inet/node/inet/MyStandardHost_Udp_Ipv4.ned
+	src/inet/node/base/MyApplicationLayerNodeBase_Udp_Ipv4.ned
+	src/inet/node/base/MyTransportLayerNodeBase_Udp_Ipv4.ned
         src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_MobileStation.ned
         src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_MobileStation.ned
         src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_ShoreStation.ned
