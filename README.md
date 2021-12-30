@@ -70,6 +70,8 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
         	src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_MobileStation.ned
         	src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_ShoreStation.ned
         	src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_ShoreStation.ned
+		
+	*other source files are attached for debugging 
 
 # Usage:
 1. Copy the program files in the program folder to the same folder as the complete INET module source file path;
