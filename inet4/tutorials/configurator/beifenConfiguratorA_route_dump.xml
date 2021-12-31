@@ -46,4 +46,12 @@
    <route hosts="beifenConfiguratorA.router2" destination="10.1.0.5" netmask="255.255.255.255" gateway="*" interface="eth1" metric="0"/>
    <route hosts="beifenConfiguratorA.router2" destination="10.0.0.0" netmask="255.255.255.248" gateway="10.1.0.1" interface="eth0" metric="0"/>
    <route hosts="beifenConfiguratorA.router2" destination="10.0.1.0" netmask="255.255.255.248" gateway="10.1.0.5" interface="eth1" metric="0"/>
+   <sid hosts="beifenConfiguratorA.router0" ipaddr="10.0.0.1" Service Id="10.1"/>
+   <sid hosts="beifenConfiguratorA.router0" ipaddr="10.0.0.2" Service Id="10.2"/>
+   <sid hosts="beifenConfiguratorA.router0" ipaddr="10.0.0.3" Service Id="10.3"/>
+   <sid hosts="beifenConfiguratorA.router0" ipaddr="10.1.0.1" Service Id="10.4"/>
+   <sid hosts="beifenConfiguratorA.router1" ipaddr="10.0.1.1" Service Id="20.1"/>
+   <sid hosts="beifenConfiguratorA.router1" ipaddr="10.0.1.2" Service Id="20.2"/>
+   <sid hosts="beifenConfiguratorA.router1" ipaddr="10.0.1.3" Service Id="20.3"/>
+   <sid hosts="beifenConfiguratorA.router1" ipaddr="10.1.0.5" Service Id="20.4"/>
 </config>
