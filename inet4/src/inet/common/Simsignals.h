@@ -47,7 +47,7 @@ extern INET_API simsignal_t    // admin
     mrouteDeletedSignal,
     mrouteChangedSignal,
 
-// layer 3 - Sid Table  // new added ^-^
+// layer 3 - Sid Table
     sidAddedSignal,
     sidDeletedSignal,
     sidChangedSignal,

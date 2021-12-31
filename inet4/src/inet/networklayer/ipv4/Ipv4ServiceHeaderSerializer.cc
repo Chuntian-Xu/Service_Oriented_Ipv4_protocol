@@ -10,7 +10,7 @@ namespace inet {
 Register_Serializer(Ipv4ServiceHeader, Ipv4ServiceHeaderSerializer);
 
 void Ipv4ServiceHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const {
-    EV_INFO<<"!!! --> Ipv4ServiceHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const\n";
+//    EV_INFO<<"!!! --> Ipv4ServiceHeaderSerializer::serialize(MemoryOutputStream& stream, const Ptr<const Chunk>& chunk) const\n";
     auto startPosition = stream.getLength();
     struct ip_service iphdr;
     const auto& ipv4ServiceHeader = staticPtrCast<const Ipv4ServiceHeader>(chunk);

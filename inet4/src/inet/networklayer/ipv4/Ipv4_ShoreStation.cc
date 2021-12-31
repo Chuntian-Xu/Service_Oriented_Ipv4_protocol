@@ -56,7 +56,6 @@ Ipv4_ShoreStation::~Ipv4_ShoreStation()
 // ^-^
 void Ipv4_ShoreStation::initialize(int stage) {
     OperationalBase::initialize(stage);
-
     if (stage == INITSTAGE_LOCAL) {
         ift = getModuleFromPar<IInterfaceTable>(par("interfaceTableModule"), this);
         rt = getModuleFromPar<IIpv4RoutingTable>(par("routingTableModule"), this);
@@ -135,7 +134,7 @@ void Ipv4_ShoreStation::refreshDisplay() const
 }
 
 void Ipv4_ShoreStation::handleRequest(Request *request) {
-    EV_INFO<<"Ipv4_ShoreStation::handleRequest(Request *request) \n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleRequest(Request *request) \n"; // new added
     auto ctrl = request->getControlInfo();
     if (ctrl == nullptr)
         throw cRuntimeError("Request '%s' arrived without controlinfo", request->getName());
@@ -181,7 +180,7 @@ void Ipv4_ShoreStation::handleRequest(Request *request) {
 
 // ^-^
 void Ipv4_ShoreStation::handleMessageWhenUp(cMessage *msg) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleMessageWhenUp(cMessage *msg)\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleMessageWhenUp(cMessage *msg)\n"; // new added
     if (msg->arrivedOn("transportIn")) {    //TODO packet->getArrivalGate()->getBaseId() == transportInGateBaseId
         if (auto request = dynamic_cast<Request *>(msg)) handleRequest(request);
         else handlePacketFromHL(check_and_cast<Packet*>(msg));
@@ -235,14 +234,14 @@ const InterfaceEntry *Ipv4_ShoreStation::getSourceInterface(Packet *packet)
 
 // ^-^
 const InterfaceEntry *Ipv4_ShoreStation::getDestInterface(Packet *packet) {
-    EV_INFO<<"   !--> Ipv4_ShoreStation::getDestInterface(Packet *packet)\n"; // new added
+//    EV_INFO<<"   !--> Ipv4_ShoreStation::getDestInterface(Packet *packet)\n"; // new added
     auto tag = packet->findTag<InterfaceReq>();
     return tag != nullptr ? ift->getInterfaceById(tag->getInterfaceId()) : nullptr;
 }
 
 // ^-^
 Ipv4Address Ipv4_ShoreStation::getNextHop(Packet *packet) {
-    EV_INFO<<"   !--> Ipv4_ShoreStation::getNextHop(Packet *packet)\n";
+//    EV_INFO<<"   !--> Ipv4_ShoreStation::getNextHop(Packet *packet)\n"; // new added
     auto tag = packet->findTag<NextHopAddressReq>();
     return tag != nullptr ? tag->getNextHopAddress().toIpv4() : Ipv4Address::UNSPECIFIED_ADDRESS;
 }
@@ -250,7 +249,7 @@ Ipv4Address Ipv4_ShoreStation::getNextHop(Packet *packet) {
 // ^-^
 void Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) {
     service_flag = true; // ^-^ new added !!!
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) \n"; // new added
+    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) --> service_flag == true\n"; // new added
     EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
@@ -274,10 +273,10 @@ void Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) {
     }
     // remove lower layer paddings:
     if (ipv4Header->getTotalLengthField() < packet->getDataLength()) {
-        EV_INFO<<"    --> remove lower layer paddings!\n"; // new added
-        EV_INFO<<"    --> packet before remove lower layer paddings: "<<packet<<"\n"; // new added
+//        EV_INFO<<"    --> remove lower layer paddings!\n"; // new added
+//        EV_INFO<<"    --> packet before remove lower layer paddings: "<<packet<<"\n"; // new added
         packet->setBackOffset(packet->getFrontOffset() + ipv4Header->getTotalLengthField());
-        EV_INFO<<"    --> packet after remove lower layer paddings: "<<packet<<"\n"; // new added
+//        EV_INFO<<"    --> packet after remove lower layer paddings: "<<packet<<"\n"; // new added
     }
     // check for header biterror
     if (packet->hasBitError()) {
@@ -296,21 +295,22 @@ void Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) {
 
 // ^-^ new added !!! 处理从mac层接收到的packet,去掉ipv4serviceHeader,重构ipv4Header,然后经过路由发送到目的主机
 void Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) \n"; // new added
+    service_flag = false;// new added
+    EV_INFO<<"!!! --> Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) --> service_flag == false\n"; // new added
     EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     //-----------------decapsulate-----------------
-    EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
+//    EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
     const auto& ipv4ServiceHeader = removeNetworkProtocolHeader<Ipv4ServiceHeader>(packet);
-    EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n";
-    EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
+//    EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n";
+//    EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
     ServiceId srcServiceId=ipv4ServiceHeader->getSrcServiceId();
     ServiceId destServiceId=ipv4ServiceHeader->getDestServiceId();
-    EV_INFO << "   --> srcServiceId: "<<srcServiceId<<"  destServiceId: "<<destServiceId<<"\n";
+//    EV_INFO << "   --> srcServiceId: "<<srcServiceId<<"  destServiceId: "<<destServiceId<<"\n";
     int sidNum = st->getNumSids();
-    EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
+//    EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
     Ipv4Address srcIpaddr;
     Ipv4Address destIpaddr;
     for(int i=0; i<sidNum; ++i) {
@@ -318,7 +318,7 @@ void Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) {
         if(sid->getSid() == srcServiceId)  srcIpaddr = sid->getIpaddr();
         else if(sid->getSid() == destServiceId) destIpaddr = sid->getIpaddr();
     }
-    EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
+//    EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
     //----------------encapsulate----------------
     const auto& ipv4Header = makeShared<Ipv4Header>();
     ipv4Header->setSrcAddress(srcIpaddr);
@@ -396,20 +396,20 @@ void Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) {
 
 // ^-^
 Packet *Ipv4_ShoreStation::prepareForForwarding(Packet *packet) const {
-    EV_INFO<<"   !--> Ipv4_ShoreStation::prepareForForwarding(Packet *packet) \n"; // new added
-    EV_INFO<<"    --> packet before removeNetworkProtocolHeader(): "<<packet<<"\n"; // new added
+//    EV_INFO<<"   !--> Ipv4_ShoreStation::prepareForForwarding(Packet *packet) \n"; // new added
+//    EV_INFO<<"    --> packet before removeNetworkProtocolHeader(): "<<packet<<"\n"; // new added
     const auto& ipv4Header = removeNetworkProtocolHeader<Ipv4Header>(packet); // !!!!!!
-    EV_INFO<<"    --> packet afer removeNetworkProtocolHeader(): "<<packet<<"\n"; // new added
+//    EV_INFO<<"    --> packet afer removeNetworkProtocolHeader(): "<<packet<<"\n"; // new added
     ipv4Header->setTimeToLive(ipv4Header->getTimeToLive() - 1);
     insertNetworkProtocolHeader(packet, Protocol::ipv4, ipv4Header);  // !!!!!!
-    EV_INFO<<"    --> packet afer insertNetworkProtocolHeader(): "<<packet<<"\n"; // new added
+//    EV_INFO<<"    --> packet afer insertNetworkProtocolHeader(): "<<packet<<"\n"; // new added
     return packet;
 }
 
 // ^-^
 void Ipv4_ShoreStation::preroutingFinish(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::preroutingFinish(Packet *packet)\n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::preroutingFinish(Packet *packet)\n"; // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     const InterfaceEntry *fromIE = ift->getInterfaceById(packet->getTag<InterfaceInd>()->getInterfaceId());
     Ipv4Address nextHopAddr = getNextHop(packet);
 
@@ -480,7 +480,7 @@ void Ipv4_ShoreStation::preroutingFinish(Packet *packet) {
         }
         else {
             packet->addTagIfAbsent<NextHopAddressReq>()->setNextHopAddress(nextHopAddr);
-            EV_INFO << "    --> prepareForForwarding!\n";
+//            EV_INFO << "    --> prepareForForwarding!\n"; // new added
             routeUnicastPacket(prepareForForwarding(packet));
         }
     }
@@ -488,7 +488,7 @@ void Ipv4_ShoreStation::preroutingFinish(Packet *packet) {
 
 // ^-^
 void Ipv4_ShoreStation::handlePacketFromHL(Packet *packet) {
-    EV_INFO <<"!!! --> Ipv4_ShoreStation::handlePacketFromHL(Packet *packet)" << "\n"; // new added
+//    EV_INFO <<"!!! --> Ipv4_ShoreStation::handlePacketFromHL(Packet *packet)" << "\n"; // new added
     EV_INFO << "Received " << packet << " from upper layer.\n";
     emit(packetReceivedFromUpperSignal, packet);
 
@@ -511,7 +511,7 @@ void Ipv4_ShoreStation::handlePacketFromHL(Packet *packet) {
 
 // ^-^
 void Ipv4_ShoreStation::datagramLocalOut(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::datagramLocalOut(Packet *packet)\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::datagramLocalOut(Packet *packet)\n"; // new added
     const InterfaceEntry *destIE = getDestInterface(packet);
     Ipv4Address requestedNextHopAddress = getNextHop(packet);
 
@@ -616,8 +616,8 @@ const InterfaceEntry *Ipv4_ShoreStation::determineOutgoingInterfaceForMulticastD
 
 // ^-^
 void Ipv4_ShoreStation::routeUnicastPacket(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::routeUnicastPacket(Packet *packet)\n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::routeUnicastPacket(Packet *packet)\n"; // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     const InterfaceEntry *fromIE = getSourceInterface(packet);
     const InterfaceEntry *destIE = getDestInterface(packet);
     Ipv4Address nextHopAddress = getNextHop(packet);
@@ -663,14 +663,14 @@ void Ipv4_ShoreStation::routeUnicastPacket(Packet *packet) {
         if (fromIE != nullptr) {
             if (datagramForwardHook(packet) != INetfilter::IHook::ACCEPT) return;
         }
-        EV_INFO << "\n    --> fragment and send\n";
+//        EV_INFO << "\n    --> fragment and send\n"; // new added
         routeUnicastPacketFinish(packet);
     }
 }
 // ^-^
 void Ipv4_ShoreStation::routeUnicastPacketFinish(Packet *packet) {
-    EV_INFO <<"!!! --> Ipv4_ShoreStation::routeUnicastPacketFinish(Packet *packet) \n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO <<"!!! --> Ipv4_ShoreStation::routeUnicastPacketFinish(Packet *packet) \n"; // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     EV_INFO << "output interface = " << getDestInterface(packet)->getInterfaceName() << ", next hop address = " << getNextHop(packet) << "\n";
     numForwarded++;
     fragmentPostRouting(packet);
@@ -805,7 +805,7 @@ void Ipv4_ShoreStation::forwardMulticastPacket(Packet *packet)
 
 // ^-^
 void Ipv4_ShoreStation::reassembleAndDeliver(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_ShoreStation::reassembleAndDeliver(Packet *packet) \n"; // new added
+//    EV_INFO << "!!! --> Ipv4_ShoreStation::reassembleAndDeliver(Packet *packet) \n"; // new added
     EV_INFO << "Delivering " << packet << " locally.\n";
 
     const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();
@@ -842,7 +842,7 @@ void Ipv4_ShoreStation::reassembleAndDeliver(Packet *packet) {
 
 // ^-^
 void Ipv4_ShoreStation::reassembleAndDeliverFinish(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_ShoreStation::reassembleAndDeliverFinish(Packet *packet) \n"; // new added
+//    EV_INFO << "!!! --> Ipv4_ShoreStation::reassembleAndDeliverFinish(Packet *packet) \n"; // new added
     auto ipv4HeaderPosition = packet->getFrontOffset();
     const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();
     const Protocol *protocol = ipv4Header->getProtocol();
@@ -882,7 +882,7 @@ void Ipv4_ShoreStation::reassembleAndDeliverFinish(Packet *packet) {
 
 // ^-^ 拆包 !!!
 void Ipv4_ShoreStation::decapsulate(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::decapsulate(Packet *packet) \n";
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::decapsulate(Packet *packet) \n"; // new added
     // decapsulate transport packet
     const auto& ipv4Header = packet->popAtFront<Ipv4Header>();
 
@@ -904,8 +904,8 @@ void Ipv4_ShoreStation::decapsulate(Packet *packet) {
 
 // ^-^
 void Ipv4_ShoreStation::fragmentPostRouting(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::fragmentPostRouting(Packet *packet) \n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::fragmentPostRouting(Packet *packet) \n"; // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     const InterfaceEntry *destIE = ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId());
     // fill in source address
     if (packet->peekAtFront<Ipv4Header>()->getSrcAddress().isUnspecified()) {
@@ -957,8 +957,8 @@ void Ipv4_ShoreStation::insertCrc(const Ptr<Ipv4Header>& ipv4Header)
 
 // ^-^
 void Ipv4_ShoreStation::fragmentAndSend(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::fragmentAndSend(Packet *packet) \n";  // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::fragmentAndSend(Packet *packet) \n";  // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     const InterfaceEntry *destIE = ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId());
     Ipv4Address nextHopAddr = getNextHop(packet);
     if (nextHopAddr.isUnspecified()) {
@@ -980,19 +980,18 @@ void Ipv4_ShoreStation::fragmentAndSend(Packet *packet) {
     int mtu = destIE->getMtu();
     // send datagram straight out if it doesn't require fragmentation (note: mtu==0 means infinite mtu)
     if (mtu == 0 || packet->getByteLength() <= mtu) {
-        EV_INFO<<"    --> no fragment\n";
+//        EV_INFO<<"    --> no fragment\n"; // new added
         if (crcMode == CRC_COMPUTED) {
             auto ipv4Header = removeNetworkProtocolHeader<Ipv4Header>(packet);
             setComputedCrc(ipv4Header);
             insertNetworkProtocolHeader(packet, Protocol::ipv4, ipv4Header);
         }
         // ^- ^ new added !!!
-        if(service_flag == false) {
+        if(!service_flag) {
             sendDatagramToOutput(packet);   // ^- ^ new added !!!
         }
-        else if(service_flag == true) {
+        else if(service_flag) {
             sendDatagramToOutput_Service(packet);   // ^- ^ new added !!!
-            service_flag = false;
         }
         return;
     }
@@ -1063,7 +1062,7 @@ void Ipv4_ShoreStation::fragmentAndSend(Packet *packet) {
 
 // ^-^  IP封包 !!!
 void Ipv4_ShoreStation::encapsulate(Packet *transportPacket) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::encapsulate(Packet *transportPacket) \n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::encapsulate(Packet *transportPacket) \n"; // new added
     const auto& ipv4Header = makeShared<Ipv4Header>();
 
     auto l3AddressReq = transportPacket->removeTag<L3AddressReq>();
@@ -1168,7 +1167,7 @@ void Ipv4_ShoreStation::encapsulate(Packet *transportPacket) {
 
 // ^-^  将数据向下发送到底层模块
 void Ipv4_ShoreStation::sendDatagramToOutput(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_ShoreStation::sendDatagramToOutput(Packet *packet) \n"; // new added
+    EV_INFO << "!!! --> Ipv4_ShoreStation::sendDatagramToOutput(Packet *packet) --> \n"; // new added
     EV_INFO<<"    --> packet: "<<packet<<"\n";// new added
     const InterfaceEntry *ie = ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId());
     auto nextHopAddressReq = packet->removeTag<NextHopAddressReq>();
@@ -1184,10 +1183,10 @@ void Ipv4_ShoreStation::sendDatagramToOutput(Packet *packet) {
         }
         else {
             ASSERT2(pendingPackets.find(nextHopAddr) == pendingPackets.end(), "Ipv4-ARP error: nextHopAddr found in ARP table, but Ipv4 queue for nextHopAddr not empty");
-            EV_INFO << "   --> packet before addTagIfAbsent:"<<packet<<"\n"; // new added
+//            EV_INFO << "   --> packet before addTagIfAbsent:"<<packet<<"\n"; // new added
             packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);
-            EV_INFO << "   --> packet after addTagIfAbsent:"<<packet<<"\n"; // new added
-            EV_INFO << "    --> sendPacketToNIC\n"; // new added
+//            EV_INFO << "   --> packet after addTagIfAbsent:"<<packet<<"\n"; // new added
+//            EV_INFO << "    --> sendPacketToNIC\n"; // new added
             sendPacketToNIC(packet);
         }
     }
@@ -1195,7 +1194,8 @@ void Ipv4_ShoreStation::sendDatagramToOutput(Packet *packet) {
 
 // ^-^  new added !!! 去掉Ipv4Header,添加Ipv4HeaderService
 void Ipv4_ShoreStation::sendDatagramToOutput_Service(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_MobileStation::sendDatagramToOutput_Service(Packet *packet) \n"; // new added
+    EV_INFO << "!!! --> Ipv4_ShoreStation::sendDatagramToOutput_Service(Packet *packet) \n"; // new added
+    EV_INFO<<"    --> packet: "<<packet<<"\n";// new added
     const InterfaceEntry *ie = ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId());
     auto nextHopAddressReq = packet->removeTag<NextHopAddressReq>();
     Ipv4Address nextHopAddr = nextHopAddressReq->getNextHopAddress().toIpv4();
@@ -1211,15 +1211,15 @@ void Ipv4_ShoreStation::sendDatagramToOutput_Service(Packet *packet) {
             ASSERT2(pendingPackets.find(nextHopAddr) == pendingPackets.end(), "Ipv4-ARP error: nextHopAddr found in ARP table, but Ipv4 queue for nextHopAddr not empty");
             packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);
             //-----------------new added-----------------
-            EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
+//            EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
             const auto& ipv4Header = removeNetworkProtocolHeader<Ipv4Header>(packet);
-            EV_INFO << "    --> ipv4Header:"<<ipv4Header<<"\n";
-            EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
+//            EV_INFO << "    --> ipv4Header:"<<ipv4Header<<"\n";
+//            EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
             Ipv4Address srcIpaddr=ipv4Header->getSrcAddress();
             Ipv4Address destIpaddr=ipv4Header->getDestAddress();
-            EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
+//            EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
             int sidNum = st->getNumSids();
-            EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
+//            EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
             ServiceId srcServiceId;
             ServiceId destServiceId;
             for(int i=0; i<sidNum; ++i) {
@@ -1232,11 +1232,11 @@ void Ipv4_ShoreStation::sendDatagramToOutput_Service(Packet *packet) {
             const auto& ipv4ServiceHeader = makeShared<Ipv4ServiceHeader>();
             ipv4ServiceHeader->setSrcServiceId(srcServiceId);
             ipv4ServiceHeader->setDestServiceId(destServiceId);
-            EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n";
+//            EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n";
             insertNetworkProtocolHeader(packet, Protocol::ipv4, ipv4ServiceHeader);
-            EV_INFO<<"    --> packet afer insert ipv4HeaderService: "<<packet<<"\n"; // new added
+//            EV_INFO<<"    --> packet afer insert ipv4HeaderService: "<<packet<<"\n"; // new added
             //-------------------------------------------
-            EV_INFO << "    --> sendPacketToNIC\n"; // new added
+//            EV_INFO << "    --> sendPacketToNIC\n"; // new added
             sendPacketToNIC(packet);
         }
     }
@@ -1300,8 +1300,8 @@ MacAddress Ipv4_ShoreStation::resolveNextHopMacAddress(cPacket *packet, Ipv4Addr
 
 // ^-^
 void Ipv4_ShoreStation::sendPacketToNIC(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_ShoreStation::sendPacketToNIC(Packet *packet) \n";
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO << "!!! --> Ipv4_ShoreStation::sendPacketToNIC(Packet *packet) \n";
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     EV_INFO << "Sending " << packet << " to output interface = " << ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId())->getInterfaceName() << ".\n";
     packet->addTagIfAbsent<PacketProtocolTag>()->setProtocol(&Protocol::ipv4);
     packet->addTagIfAbsent<DispatchProtocolInd>()->setProtocol(&Protocol::ipv4);
@@ -1375,7 +1375,7 @@ void Ipv4_ShoreStation::reinjectQueuedDatagram(const Packet *packet)
 
 // ^-^
 INetfilter::IHook::Result Ipv4_ShoreStation::datagramPreRoutingHook(Packet *packet) {
-    EV_INFO<<"   !--> Ipv4_ShoreStation::datagramPreRoutingHook(Packet *packet) \n"; // new added
+//    EV_INFO<<"   !--> Ipv4_ShoreStation::datagramPreRoutingHook(Packet *packet) \n"; // new added
     for (auto & elem : hooks) {
         IHook::Result r = elem.second->datagramPreRoutingHook(packet);
         switch (r) {
@@ -1428,7 +1428,7 @@ INetfilter::IHook::Result Ipv4_ShoreStation::datagramForwardHook(Packet *packet)
 
 // ^-^
 INetfilter::IHook::Result Ipv4_ShoreStation::datagramPostRoutingHook(Packet *packet) {
-    EV_INFO<<"   !--> Ipv4_ShoreStation::datagramPostRoutingHook(Packet *packet)\n";  //new added
+//    EV_INFO<<"   !--> Ipv4_ShoreStation::datagramPostRoutingHook(Packet *packet)\n";  //new added
     for (auto & elem : hooks) {
         IHook::Result r = elem.second->datagramPostRoutingHook(packet);
         switch (r) {
@@ -1530,7 +1530,7 @@ INetfilter::IHook::Result Ipv4_ShoreStation::datagramLocalInHook(Packet *packet)
 
 // ^-^
 INetfilter::IHook::Result Ipv4_ShoreStation::datagramLocalOutHook(Packet *packet) {
-    EV_INFO<<"!!! --> Ipv4_ShoreStation::datagramLocalOutHook(Packet *packet) \n";
+//    EV_INFO<<"!!! --> Ipv4_ShoreStation::datagramLocalOutHook(Packet *packet) \n";
     for (auto & elem : hooks) {
         IHook::Result r = elem.second->datagramLocalOutHook(packet);
         switch (r) {
