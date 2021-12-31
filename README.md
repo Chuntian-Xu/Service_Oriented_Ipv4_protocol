@@ -71,10 +71,11 @@ Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT
         	src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_ShoreStation.ned
         	src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_ShoreStation.ned
 		
-	10. Service Oriented Internet Archietecture
+	10. SoI network Archietecture
 		/inet/tutorials/configurator/SoI_Architecture.ini
 		/inet/tutorials/configurator/SoI_Architecture.ned
 		/inet/tutorials/configurator/SoI_Architecture.xml
+		
 	*other source files are attached for debugging 
 
 # Usage:
