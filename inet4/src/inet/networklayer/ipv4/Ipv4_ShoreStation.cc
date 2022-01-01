@@ -299,7 +299,6 @@ void Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) {
     EV_INFO<<"!!! --> Ipv4_ShoreStation::handleIncomingDatagram_Service(Packet *packet) --> service_flag == false\n"; // new added
     EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
-    int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     //-----------------decapsulate-----------------
 //    EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";

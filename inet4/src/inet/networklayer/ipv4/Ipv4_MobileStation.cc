@@ -254,7 +254,7 @@ Ipv4Address Ipv4_MobileStation::getNextHop(Packet *packet) {
 void Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) {
     service_flag = true; // ^-^ new added !!!
     EV_INFO<<"!!! --> Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) --> service_flag == true\n"; // new added
-//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
@@ -301,9 +301,8 @@ void Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) {
 void Ipv4_MobileStation::handleIncomingDatagram_Service(Packet *packet) {
     service_flag = false; // new added
     EV_INFO<<"!!! --> Ipv4_MobileStation::handleIncomingDatagram_Service(Packet *packet) --> service_flag == false\n"; // new added
-//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
-    int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     //-----------------decapsulate-----------------
 //    EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
