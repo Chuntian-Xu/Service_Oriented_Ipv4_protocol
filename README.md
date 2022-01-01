@@ -1,9 +1,10 @@
 # omnet++/inet_Service-Id-Table 
-Implement Ipv4 ServiceId Table(&lt;ipaddr,sid>) based on INET framework on OMNeT++.
+Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
 
 # Version: 
-	OMNeT++ 5.6.2(https://github.com/omnetpp/omnetpp/releases/download/omnetpp-5.6.2/omnetpp-5.6.2-src-windows.zip)
-	INET 4.2.5(https://github.com/inet-framework/inet/releases/download/v4.2.5/inet-4.2.5-src.tgz)
+	Operating system: Windows 10
+	OMNeT++ 5.6.2
+	INET 4.2.5
 
 # Framework:
 	(To implement the function of ServiceId Table)
