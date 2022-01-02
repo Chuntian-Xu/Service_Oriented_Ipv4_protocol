@@ -85,7 +85,7 @@ Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
 3. Rebuild
 
 # Contributors
-Chuntian Xu(Southeast University, China)
+* Chuntian Xu(Southeast University, China)
 chuntianxu2020@163.com
 
 # Notice
