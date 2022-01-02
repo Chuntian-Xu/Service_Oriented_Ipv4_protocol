@@ -1,11 +1,9 @@
 # omnet++/inet_Service-Id-Table 
 Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
-
 # Version
 	Operating system: Windows 10
 	OMNeT++ 5.6.2
 	INET 4.2.5
-
 # Directory Structure
 	(To implement the function of ServiceId Table)
 	1. ISidTable:
@@ -78,15 +76,12 @@ Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
 		/inet/tutorials/configurator/SoI_Architecture.xml
 		
 	*other source files are attached for debugging 
-
 # Usage
 1. Copy the program files in the program folder to the same folder as the complete INET module source file path;
 2. If there is no corresponding path in the source file, create a new folder according to the path of the program file in the program folder, and then copy the program into it;
 3. Rebuild
-
 # Contributors
 * Chuntian Xu(Southeast University, China)
 chuntianxu2020@163.com
-
 # Notice
 If you want to use this code for further development, please contact me for approval !
