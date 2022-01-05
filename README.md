@@ -1,7 +1,7 @@
 # omnet++/inet_Service-Id-Table 
 Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
 # Version
-	Operating system: Windows 10
+	Operating system: Windows 10-64
 	OMNeT++ 5.6.2
 	INET 4.2.5
 # Directory Structure
