@@ -30,7 +30,7 @@ module Ipv4NetworkLayerShoreStation like INetworkLayer {
         output transportOut @labels(Ipv4ControlInfo/up);
 
     submodules:
-        configurator_Network: <default("Ipv4NodeConfigurator")> like IIpv4NodeConfigurator if typename != "" {
+        configurator_Node: <default("Ipv4NodeConfigurator")> like IIpv4NodeConfigurator if typename != "" {
             parameters:
                 @display("p=109.2,100.1;is=s");
         }

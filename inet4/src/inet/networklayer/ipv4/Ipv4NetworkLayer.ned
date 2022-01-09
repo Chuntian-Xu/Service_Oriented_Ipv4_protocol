@@ -23,7 +23,8 @@ module Ipv4NetworkLayer like INetworkLayer {
         *.routingTableModule = default(absPath(".routingTable"));
         
         *.sidTableModule = default(absPath(".sidTable")); // new added
-        
+        *.configureSidTable =false; // new added
+		
         *.arpModule = default(absPath(".arp"));
         *.icmpModule = default(absPath(".icmp"));
         @class(::inet::Ipv4NetworkLayer);
@@ -37,7 +38,7 @@ module Ipv4NetworkLayer like INetworkLayer {
 
     submodules:
         //  the network's global configurator module
-        configurator_Network: <default("Ipv4NodeConfigurator")> like IIpv4NodeConfigurator if typename != "" {
+        configurator_Node: <default("Ipv4NodeConfigurator")> like IIpv4NodeConfigurator if typename != "" {
             parameters:
                 @display("p=109.2,100.1;is=s");
         }
