@@ -1,5 +1,5 @@
 # omnet++/inet_Service-Id-Table 
-Define and implement the basic architecture of service-based network layer protocols for Ipv4 based on INET simulation framework for OMNeT++ simulation environment.
+Define and implement the basic architecture of service-based network layer protocols for Ipv4 based on INET simulation framework in OMNeT++ simulation environment.
 # Version
 	Operating system: Windows 10-64
 	OMNeT++ 5.6.2
