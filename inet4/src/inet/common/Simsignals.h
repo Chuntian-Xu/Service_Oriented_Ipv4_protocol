@@ -1,5 +1,5 @@
 // src/inet/common/Simsignals.h
-
+ 
 #ifndef __INET_SIMSIGNALS_H
 #define __INET_SIMSIGNALS_H
 
@@ -47,10 +47,15 @@ extern INET_API simsignal_t    // admin
     mrouteDeletedSignal,
     mrouteChangedSignal,
 
-// layer 3 - Sid Table
+// layer 3 - Sid Table  // new added
     sidAddedSignal,
     sidDeletedSignal,
     sidChangedSignal,
+
+// layer 3 - Cid Table  // new added
+    cidAddedSignal,
+    cidDeletedSignal,
+    cidChangedSignal,
 
 // layer 3 - Ipv4
     ipv4MulticastChangeSignal,

@@ -1,4 +1,4 @@
-//src/inet/networklayer/common/L3AddressResolver.cc
+//src/inet/networklayer/common/L3AddressResolver.cc 
 
 #include "inet/networklayer/common/L3AddressResolver.h"
 #include "inet/networklayer/common/ModuleIdAddress.h"
@@ -10,6 +10,7 @@
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 #include "inet/networklayer/ipv4/Ipv4InterfaceData.h"
 #include "inet/networklayer/ipv4/IIpv4SidTable.h" // new added
+#include "inet/networklayer/ipv4/IIpv4CidTable.h" // new added
 #endif // ifdef WITH_IPv4
 
 #ifdef WITH_IPv6
@@ -50,11 +51,14 @@ bool L3AddressResolver::tryParse(L3Address& result, const char *addr, int addrTy
     ModuleIdAddress moduleId;
     ModulePathAddress modulePath;
     if (((addrType & ADDR_IPv4) != 0) && Ipv4Address::isWellFormed(addr)) result.set(Ipv4Address(addr));
-    else if((addrType & ADDR_SERVICEID)!=0) result.set(ServiceId(addr)); // new added
     else if (((addrType & ADDR_IPv6) != 0) && ipv6.tryParse(addr)) result.set(ipv6);
     else if (((addrType & ADDR_MAC) != 0) && mac.tryParse(addr)) result.set(mac);
     else if (((addrType & ADDR_MODULEID) != 0) && moduleId.tryParse(addr)) result.set(moduleId);
     else if (((addrType & ADDR_MODULEPATH) != 0) && modulePath.tryParse(addr)) result.set(modulePath);
+
+    else if((addrType & ADDR_SERVICEID)!=0) result.set(ServiceId(addr)); // new added
+    else if((addrType & ADDR_CLIENTID)!=0) result.set(ClientId(addr)); // new added
+
     else return false;
     return true;
 }
@@ -463,6 +467,16 @@ IIpv4SidTable *L3AddressResolver::findIpv4SidTableOf(cModule *host) {
     return nullptr;
 #endif // ifdef WITH_IPv4
 }
+
+// new added
+IIpv4CidTable *L3AddressResolver::findIpv4CidTableOf(cModule *host) {
+#ifdef WITH_IPv4
+    return dynamic_cast<IIpv4CidTable *>(host->getModuleByPath(".ipv4.cidTable"));
+#else // ifdef WITH_IPv4
+    return nullptr;
+#endif // ifdef WITH_IPv4
+}
+
 
 Ipv6RoutingTable *L3AddressResolver::findIpv6RoutingTableOf(cModule *host)
 {

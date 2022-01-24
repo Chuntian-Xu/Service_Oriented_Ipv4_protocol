@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NodeConfigurator.h
-
+ 
 #ifndef __INET_IPV4NODECONFIGURATOR_H
 #define __INET_IPV4NODECONFIGURATOR_H
 
@@ -11,6 +11,7 @@
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 
 #include "inet/networklayer/ipv4/IIpv4SidTable.h" // new added
+#include "inet/networklayer/ipv4/IIpv4CidTable.h" // new added
 
 namespace inet {
 
@@ -28,6 +29,7 @@ class INET_API Ipv4NodeConfigurator : public cSimpleModule, public ILifecycle, p
     Ipv4NetworkConfigurator *networkConfigurator;
 
     IIpv4SidTable *sidTable; // new added
+    IIpv4CidTable *cidTable; // new added
 
   public:
     Ipv4NodeConfigurator();
@@ -43,6 +45,7 @@ class INET_API Ipv4NodeConfigurator : public cSimpleModule, public ILifecycle, p
     virtual void configureRoutingTable();
 
     virtual void configureSidTable(); // new added
+    virtual void configureCidTable(); // new added
 
     /**
      * Called by the signal handler whenever a change of a category

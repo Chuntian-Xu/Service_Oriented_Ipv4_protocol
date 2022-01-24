@@ -1,4 +1,4 @@
-// src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_ShoreStation.ned
+// src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_ShoreStation.ned 
 
 package inet.node.inet;
 
@@ -9,5 +9,5 @@ module MyRouter_Udp_Ipv4_Wireless_ShoreStation extends MyNetworkLayerNodeBase_Ip
         @display("i=abstract/router");
         @figure[submodules];
         forwarding = true;
-        numWlanInterfaces = default(1);
+        numWmtcInterfaces = default(1);
 }

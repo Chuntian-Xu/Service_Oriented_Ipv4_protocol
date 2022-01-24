@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/IIpv4SidTable.h
+// src/inet/networklayer/ipv4/IIpv4SidTable.h 
 
 #ifndef __INET_IIPV4SIDTABLE_H
 #define __INET_IIPV4SIDTABLE_H
@@ -43,8 +43,8 @@ class INET_API IIpv4SidTable : public ISidTable {
     virtual void addSid(Ipv4Sid *entry) = 0;
     using ISidTable::addSid;
     /**
-     * To be called from route objects whenever a field changes. Used for
-     * maintaining internal data structures and firing "routing table changed"
+     * To be called from sid objects whenever a field changes. Used for
+     * maintaining internal data structures and firing "sid table changed"
      * notifications.
      */
     virtual void ipv4SidChanged(Ipv4Sid *entry, int fieldCode) = 0;

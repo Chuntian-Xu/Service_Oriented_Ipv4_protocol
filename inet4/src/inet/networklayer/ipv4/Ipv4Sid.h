@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4Sid.h
+// src/inet/networklayer/ipv4/Ipv4Sid.h 
 
 #ifndef __INET_IPV4SID_H
 #define __INET_IPV4SID_H
@@ -20,7 +20,7 @@ class INET_API Ipv4Sid : public cObject, public ISid {
   private:
     IIpv4SidTable *rt;
     InterfaceEntry *interfacePtr;    ///< interface
-    SourceType sourceType;    ///< manual, routing prot, etc.
+    SourceType sourceType;    ///< manual, etc.
     unsigned int adminDist;    ///< Cisco like administrative distance
     Ipv4Address ipaddr;
     ServiceId sid;

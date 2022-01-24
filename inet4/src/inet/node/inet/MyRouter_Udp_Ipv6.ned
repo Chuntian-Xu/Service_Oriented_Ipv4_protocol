@@ -1,4 +1,4 @@
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -22,4 +22,6 @@ module MyRouter_Udp_Ipv6 extends MyNetworkLayerNodeBase_Ipv6 {
         xml routes = default(xml("<routingTable/>"));
         ipv6.routingTable.routes = routes;
         forwarding = true;
+        @display("i=abstract/router");
+        @figure[submodules];
 }

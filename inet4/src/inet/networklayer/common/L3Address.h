@@ -1,4 +1,4 @@
-// src/inet/networklayer/common/L3Address.h
+// src/inet/networklayer/common/L3Address.h 
 
 #ifndef __INET_L3ADDRESS_H
 #define __INET_L3ADDRESS_H
@@ -12,6 +12,7 @@
 #include "inet/networklayer/contract/ipv6/Ipv6Address.h"
 
 #include "inet/networklayer/contract/serviceid/ServiceId.h" // new added
+#include "inet/networklayer/contract/clientid/ClientId.h" // new added
 
 namespace inet {
 
@@ -32,6 +33,7 @@ class INET_API L3Address
         NONE,
         IPv4,
         SERVICEID, // new added
+        CLIENTID,  // new added
         IPv6,
         CLNS,
         MAC,
@@ -54,6 +56,7 @@ class INET_API L3Address
     L3Address(const Ipv4Address& addr) { set(addr); }
 
     L3Address(const ServiceId& addr) { set(addr); } // new added
+    L3Address(const ClientId& addr) { set(addr); } // new added
 
     L3Address(const Ipv6Address& addr) { set(addr); }
     L3Address(const MacAddress& addr) { set(addr); }
@@ -62,13 +65,19 @@ class INET_API L3Address
     L3Address(const ClnsAddress& addr) { set(addr); }
 
     void set(const Ipv4Address& addr) {
-//        EV_INFO<<"!!! --> void set(const Ipv4Address& addr)\n";
+//        EV_INFO<<"!!! --> void set(const Ipv4Address& addr)\n";  // new added
         set(IPv4, addr.getInt());
         }
-    void set(const ServiceId& addr) {
+
+    void set(const ServiceId& addr) {  // new added
 //        EV_INFO<<"!!! --> void set(const ServiceId& addr)\n";
         set(SERVICEID, addr.getInt());
-    } // new added
+    }
+    void set(const ClientId& addr) {  // new added
+//        EV_INFO<<"!!! --> void set(const ClientId& addr)\n";
+        set(CLIENTID, addr.getInt());
+    }
+
     void set(const Ipv6Address& addr);
     void set(const MacAddress& addr) { set(MAC, addr.getInt()); }
     void set(const ModuleIdAddress& addr) { set(MODULEID, addr.getId()); }
@@ -77,7 +86,10 @@ class INET_API L3Address
     void reset() { set(NONE, 0); }
 
     Ipv4Address toIpv4() const { return getType() == NONE ? Ipv4Address() : Ipv4Address(get(IPv4)); }
-    ServiceId toServiceId() const { return getType() == NONE ? ServiceId() : ServiceId(get(SERVICEID)); } // new added
+
+    ServiceId toServiceId() const { return getType() == NONE ? ServiceId() : ServiceId(uint16(get(SERVICEID))); } // new added
+    ClientId toClientId() const { return getType() == NONE ? ClientId() : ClientId(uint8(get(CLIENTID))); } // new added
+
     Ipv6Address toIpv6() const { return getType() == NONE ? Ipv6Address() : Ipv6Address(hi, get(IPv6)); }
     MacAddress toMac() const { return getType() == NONE ? MacAddress() : MacAddress(get(MAC)); }
     ModuleIdAddress toModuleId() const { return getType() == NONE ? ModuleIdAddress() : ModuleIdAddress(get(MODULEID)); }

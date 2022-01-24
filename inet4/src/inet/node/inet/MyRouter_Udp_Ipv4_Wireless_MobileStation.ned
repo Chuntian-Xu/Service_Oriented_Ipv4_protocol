@@ -1,4 +1,4 @@
-// src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_MobileStation.ned
+// src/inet/node/inet/MyRouter_Udp_Ipv4_Wireless_MobileStation.ned 
 
 package inet.node.inet;
 
@@ -9,5 +9,5 @@ module MyRouter_Udp_Ipv4_Wireless_MobileStation extends MyNetworkLayerNodeBase_I
         @display("i=abstract/router");
         @figure[submodules];
         forwarding = true;
-        numWlanInterfaces = default(1);
+        numWmtcInterfaces = default(1);
 }

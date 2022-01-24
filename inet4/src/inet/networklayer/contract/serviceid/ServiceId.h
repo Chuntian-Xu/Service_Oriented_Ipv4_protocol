@@ -1,4 +1,4 @@
-// src/inet/networklayer/contract/serviceid/ServiceId.h
+// src/inet/networklayer/contract/serviceid/ServiceId.h 
 
 #ifndef __INET_SERVICEID_H
 #define __INET_SERVICEID_H
@@ -23,6 +23,7 @@ class INET_API ServiceId {
     // Parses ServiceId into the given bytes, and returns true if syntax was OK.
     static bool parseServiceId(const char *text, unsigned char tobytes[]);
 
+    static bool parseServiceId_Dec(const char *text, uint16 & num);
   public:
     /** ServiceId  category
      * ServiceId              Present Use
@@ -35,7 +36,7 @@ class INET_API ServiceId {
 
     /** @name Predefined Sid */
     //@{
-    static const ServiceId UNSPECIFIED__MTC_Sid;    ///< 0000 0000 0000 0000
+    static const ServiceId UNSPECIFIED_MTC_Sid;    ///< 0000 0000 0000 0000
     //@}
 
     /** name Constructors, destructor */
@@ -79,10 +80,11 @@ class INET_API ServiceId {
     void set(int i0, int i1);
 
     /**
-     * ServiceId given as text: "10.1"
+     * ServiceId given as text: "10.1" 点分十进制表示
      */
     void set(const char *t);
     //@}
+
 
     /**
      * Assignment
@@ -109,6 +111,7 @@ class INET_API ServiceId {
      * @param printUnspec: show "0.0" as "<unspec>" if true
      */
     std::string str(bool printUnspec = true) const;
+
 
     /**
      * Returns the ServiceId as an uint16 in host byte order (e.g. "10.1" is 0x0A01).

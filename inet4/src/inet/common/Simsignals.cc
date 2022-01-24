@@ -1,5 +1,5 @@
 // src/inet/common/Simsignals.cc
-
+ 
 #include <stdio.h>
 
 #include "inet/common/Simsignals.h"
@@ -41,6 +41,11 @@ simsignal_t mrouteChangedSignal = cComponent::registerSignal("mrouteChanged");
 simsignal_t sidAddedSignal = cComponent::registerSignal("sidAdded");// new added
 simsignal_t sidDeletedSignal = cComponent::registerSignal("sidDeleted");// new added
 simsignal_t sidChangedSignal = cComponent::registerSignal("sidChanged");// new added
+
+// layer 3 - Cid Table
+simsignal_t cidAddedSignal = cComponent::registerSignal("cidAdded");// new added
+simsignal_t cidDeletedSignal = cComponent::registerSignal("cidDeleted");// new added
+simsignal_t cidChangedSignal = cComponent::registerSignal("cidChanged");// new added
 
 // layer 3 - Ipv4
 simsignal_t ipv4MulticastGroupJoinedSignal = cComponent::registerSignal("ipv4MulticastGroupJoined");

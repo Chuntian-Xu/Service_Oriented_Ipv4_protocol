@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4_MobileStation.ned
+// src/inet/networklayer/ipv4/Ipv4_MobileStation.ned 
 
 package inet.networklayer.ipv4;
 
@@ -16,7 +16,10 @@ simple Ipv4_MobileStation like IIpv4_MobileStation
     parameters:
         string interfaceTableModule;   // The path to the InterfaceTable module
         string routingTableModule;
+        
         string sidTableModule;  // new added
+        string cidTableModule;  // new added
+        
         string arpModule;
         string icmpModule;
         string crcMode @enum("declared", "computed") = default("declared");

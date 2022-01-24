@@ -1,4 +1,4 @@
-// src/inet/networklayer/common/L3AddressResolver.h
+// src/inet/networklayer/common/L3AddressResolver.h 
 
 #ifndef __INET_L3ADDRESSRESOLVER_H
 #define __INET_L3ADDRESSRESOLVER_H
@@ -10,6 +10,7 @@
 #include "inet/networklayer/contract/IRoutingTable.h"
 
 #include "inet/networklayer/contract/ISidTable.h" // new added
+#include "inet/networklayer/contract/ICidTable.h" // new added
 
 namespace inet {
 
@@ -21,6 +22,7 @@ class Ipv6RoutingTable;
 class NextHopRoutingTable;
 
 class IIpv4SidTable; // new added
+class IIpv4CidTable; // new added
 
 #define DEFAULT_ADDR_TYPE    (ADDR_IPv4 | ADDR_IPv6 | ADDR_MODULEPATH | ADDR_MODULEID)
 
@@ -73,7 +75,8 @@ class INET_API L3AddressResolver
         ADDR_MODULEPATH = 8,
         ADDR_MODULEID = 16,
         ADDR_MASK = 32,
-        ADDR_SERVICEID=64, //new added
+        ADDR_SERVICEID = 64, //new added
+        ADDR_CLIENTID = 128 //new added
     };
 
   public:
@@ -178,6 +181,7 @@ class INET_API L3AddressResolver
     virtual IIpv4RoutingTable *findIpv4RoutingTableOf(cModule *host);
 
     virtual IIpv4SidTable *findIpv4SidTableOf(cModule *host); // new added
+    virtual IIpv4CidTable *findIpv4CidTableOf(cModule *host); // new added
 
     /**
      * Like interfaceTableOf(), but doesn't throw error if not found.

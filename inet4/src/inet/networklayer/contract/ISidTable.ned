@@ -1,4 +1,4 @@
-// src/inet/networklayer/contract/ISidTable.ned
+// src/inet/networklayer/contract/ISidTable.ned 
 
 package inet.networklayer.contract;
 

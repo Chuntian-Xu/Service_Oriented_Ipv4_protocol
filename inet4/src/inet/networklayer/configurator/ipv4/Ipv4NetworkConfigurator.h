@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NetworkConfigurator.h
-
+ 
 #ifndef __INET_IPV4NETWORKCONFIGURATOR_H
 #define __INET_IPV4NETWORKCONFIGURATOR_H
 
@@ -13,6 +13,9 @@
 
 #include "inet/networklayer/contract/serviceid/ServiceId.h" // new added
 #include "inet/networklayer/ipv4/IIpv4SidTable.h" // new added
+
+#include "inet/networklayer/contract/clientid/ClientId.h" // new added
+#include "inet/networklayer/ipv4/IIpv4CidTable.h" // new added
 
 
 namespace inet {
@@ -34,13 +37,16 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
         std::vector<Ipv4MulticastRoute *> staticMulticastRoutes;
 
         std::vector<Ipv4Sid *> staticSids; //new added
+        std::vector<Ipv4Cid *> staticCids; //new added
 
       public:
         Node(cModule *module) : NetworkConfiguratorBase::Node(module) { }
         ~Node() {
             for (size_t i = 0; i < staticRoutes.size(); i++) delete staticRoutes[i];
             for (size_t i = 0; i < staticMulticastRoutes.size(); i++) delete staticMulticastRoutes[i];
+
             for (size_t i = 0; i < staticSids.size(); i++) delete staticSids[i];//new added
+            for (size_t i = 0; i < staticCids.size(); i++) delete staticCids[i];//new added
         }
     };
 
@@ -150,6 +156,7 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
     virtual void configureRoutingTable(IIpv4RoutingTable *routingTable);// ^-^OK^-^ ±»µ÷ÓÃ
 
     virtual void configureSidTable(IIpv4SidTable *sidTable);// new added
+    virtual void configureCidTable(IIpv4CidTable *cidTable);// new added
 
     /**
      * Configures the provided routing table based on the current network configuration for specified interfaceEntry.
@@ -186,6 +193,8 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
      */
     virtual void readManualSidConfiguration(Topology& topology); // new added
 
+    virtual void readManualCidConfiguration(Topology& topology); // new added
+
 
     /**
      * Assigns the addresses for all interfaces based on the parameters given
@@ -215,6 +224,7 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
     void configureRoutingTable(Node *node, InterfaceEntry *interfaceEntry);
 
     void configureSidTable(Node *node); // new added
+    void configureCidTable(Node *node); // new added
 
     /**
      * Prints the current network configuration to the module output.
@@ -226,6 +236,7 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
     virtual void dumpConfig(Topology& topology);
 
     virtual void dumpSids(Topology& topology);  // new added
+    virtual void dumpCids(Topology& topology);  // new added
 
 
     // helper functions
@@ -237,7 +248,10 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
     virtual InterfaceInfo *findInterfaceOnLinkByNodeAddress(LinkInfo *linkInfo, Ipv4Address address);
     virtual LinkInfo *findLinkOfInterface(Topology& topology, InterfaceEntry *interfaceEntry);
     virtual IRoutingTable *findRoutingTable(NetworkConfiguratorBase::Node *node) override;
+
     virtual ISidTable *findSidTable(NetworkConfiguratorBase::Node *node) override; // new added
+    virtual ICidTable *findCidTable(NetworkConfiguratorBase::Node *node) override; // new added
+
     virtual void assignAddresses(std::vector<LinkInfo *> links);
 
     // helpers for address assignment

@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4NetworkLayerMobileStation.ned
+// src/inet/networklayer/ipv4/Ipv4NetworkLayerMobileStation.ned 
 
 package inet.networklayer.ipv4;
 
@@ -7,7 +7,8 @@ import inet.networklayer.configurator.contract.IIpv4NodeConfigurator;
 import inet.networklayer.contract.IArp;
 import inet.networklayer.contract.INetworkLayer;
 
-module Ipv4NetworkLayerMobileStation like INetworkLayer {
+module Ipv4NetworkLayerMobileStation like INetworkLayer
+{
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
@@ -17,7 +18,10 @@ module Ipv4NetworkLayerMobileStation like INetworkLayer {
         *.multicastForwarding = multicastForwarding;
         *.interfaceTableModule = default(absPath(interfaceTableModule));
         *.routingTableModule = default(absPath(".routingTable"));
+
         *.sidTableModule = default(absPath(".sidTable")); // new added
+        *.cidTableModule = default(absPath(".cidTable")); // new added
+
         *.arpModule = default(absPath(".arp"));
         *.icmpModule = default(absPath(".icmp"));
         @class(::inet::Ipv4NetworkLayerMobileStation);
@@ -41,6 +45,10 @@ module Ipv4NetworkLayerMobileStation like INetworkLayer {
         sidTable: Ipv4SidTable {    // ServiceId Table module  // new added
             parameters:
                 @display("p=109,392;is=s");
+        }
+        cidTable: Ipv4CidTable {    // ClientId Table module  // new added
+            parameters:
+                @display("p=108.159996,479.96;is=s");
         }
         natTable: Ipv4NatTable {
             parameters:

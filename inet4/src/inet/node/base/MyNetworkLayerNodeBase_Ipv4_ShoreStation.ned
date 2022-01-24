@@ -1,11 +1,11 @@
-// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_ShoreStation.ned
+// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_ShoreStation.ned 
 
 package inet.node.base;
 
 import inet.common.MessageDispatcher;
 import inet.networklayer.contract.INetworkLayer;  
 
-module MyNetworkLayerNodeBase_Ipv4_ShoreStation extends LinkLayerNodeBase {
+module MyNetworkLayerNodeBase_Ipv4_ShoreStation extends MyLinkLayerNodeBase {
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
@@ -31,8 +31,8 @@ module MyNetworkLayerNodeBase_Ipv4_ShoreStation extends LinkLayerNodeBase {
             lo[i].upperLayerOut --> nl.in++;
         }
         for i=0..sizeof(radioIn)-1 {
-            wlan[i].upperLayerOut --> nl.in++;
-            wlan[i].upperLayerIn <-- nl.out++;
+            wmtc[i].upperLayerOut --> nl.in++;
+            wmtc[i].upperLayerIn <-- nl.out++;
         }
         for i=0..sizeof(ethg)-1 {
             eth[i].upperLayerOut --> nl.in++;

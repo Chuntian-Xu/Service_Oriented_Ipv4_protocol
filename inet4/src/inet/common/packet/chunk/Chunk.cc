@@ -1,10 +1,10 @@
 // src/inet/common/packet/chunk/Chunk.cc
-
+ 
 #include "inet/common/packet/chunk/SliceChunk.h"
 #include "inet/common/packet/serializer/ChunkSerializer.h"
 #include "inet/common/packet/serializer/ChunkSerializerRegistry.h"
 
-namespace inet {
+namespace inet { 
 
 //bool Chunk::enableImplicitChunkSerialization = false;
 bool Chunk::enableImplicitChunkSerialization = true; // new added ^-^ !!!

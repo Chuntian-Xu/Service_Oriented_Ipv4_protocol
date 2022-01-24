@@ -1,4 +1,4 @@
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -16,7 +16,7 @@
 package inet.node.inet;
 
 
-module MyWirelessHost_Udp_Ipv6 extends MyStandardHost6_Udp_Ipv6 {
+module MyWirelessHost_Udp_Ipv6 extends MyStandardHost_Udp_Ipv6 {
     parameters:
         numWlanInterfaces = default(1);
         @display("i=device/wifilaptop");

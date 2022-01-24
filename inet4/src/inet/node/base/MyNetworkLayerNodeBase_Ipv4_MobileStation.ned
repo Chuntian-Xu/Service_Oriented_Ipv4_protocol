@@ -1,26 +1,27 @@
-// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_MobileStation.ned
+// src/inet/node/base/MyNetworkLayerNodeBase_Ipv4_MobileStation.ned 
 
 package inet.node.base;
 
 import inet.common.MessageDispatcher;
-import inet.networklayer.contract.INetworkLayer;  
+import inet.networklayer.contract.INetworkLayer;
 
-module MyNetworkLayerNodeBase_Ipv4_MobileStation extends LinkLayerNodeBase {
+module MyNetworkLayerNodeBase_Ipv4_MobileStation extends MyLinkLayerNodeBase
+{
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
-        *.forwarding = forwarding;  
+        *.forwarding = forwarding;
         *.multicastForwarding = multicastForwarding;
         @figure[networkLayer](type=rectangle; pos=250,306; size=1000,130; fillColor=#00ff00; lineColor=#808080; cornerRadius=5; fillOpacity=0.1);
         @figure[networkLayer.title](type=text; pos=1245,311; anchor=ne; text="network layer");
     submodules:
         ipv4: <default("Ipv4NetworkLayerMobileStation")> like INetworkLayer {  // Ipv4NetworkLayerMobileStation module  // new added
             parameters:
-                @display("p=663,341.9;q=queue");
+                @display("p=847.35,281.925;q=queue");
         }
         nl: MessageDispatcher {
             parameters:
-                @display("p=663,414.69998;b=500,5,,,,1");
+                @display("p=845.77496,395.32498;b=500,5,,,,1");
         }
     connections allowunconnected:
         ipv4.ifIn <-- nl.out++;
@@ -31,8 +32,8 @@ module MyNetworkLayerNodeBase_Ipv4_MobileStation extends LinkLayerNodeBase {
             lo[i].upperLayerOut --> nl.in++;
         }
         for i=0..sizeof(radioIn)-1 {
-            wlan[i].upperLayerOut --> nl.in++;
-            wlan[i].upperLayerIn <-- nl.out++;
+            wmtc[i].upperLayerOut --> nl.in++;
+            wmtc[i].upperLayerIn <-- nl.out++;
         }
         for i=0..sizeof(ethg)-1 {
             eth[i].upperLayerOut --> nl.in++;

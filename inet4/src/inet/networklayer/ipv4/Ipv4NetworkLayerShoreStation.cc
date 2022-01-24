@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4NetworkLayerShoreStation.cc
+// src/inet/networklayer/ipv4/Ipv4NetworkLayerShoreStation.cc 
 
 #include "inet/common/StringFormat.h"
 #include "inet/networklayer/ipv4/Ipv4NetworkLayerShoreStation.h"

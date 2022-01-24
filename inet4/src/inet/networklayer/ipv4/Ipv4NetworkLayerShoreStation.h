@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4NetworkLayerShoreStation.h
+// src/inet/networklayer/ipv4/Ipv4NetworkLayerShoreStation.h 
 
 #ifndef __INET_IPV4NETWORKLAYERSHORESTATION_H
 #define __INET_IPV4NETWORKLAYERSHORESTATION_H

@@ -1,4 +1,4 @@
-package inet.node.inet;
+package inet.node.inet; 
 
 import inet.node.base.MyNetworkLayerNodeBase_Ipv4;
 

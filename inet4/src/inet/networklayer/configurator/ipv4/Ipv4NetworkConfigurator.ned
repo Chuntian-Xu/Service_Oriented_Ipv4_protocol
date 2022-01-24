@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NetworkConfigurator.ned
-
+ 
 package inet.networklayer.configurator.ipv4;
 
 import inet.networklayer.configurator.base.NetworkConfiguratorBase;
@@ -27,7 +27,8 @@ simple Ipv4NetworkConfigurator extends NetworkConfiguratorBase {
         bool dumpRoutes = default(false);    // print configured and optimized routing tables for all nodes to the module output
         string dumpConfig = default("");     // write configuration into the given config file that can be fed back to speed up subsequent runs (network configurations)
         
-        bool dumpSids = default(false);
+        bool dumpSids = default(false); // new added
+        bool dumpCids = default(false); // new added
 }
 
 

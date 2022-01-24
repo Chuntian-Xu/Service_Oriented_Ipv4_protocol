@@ -1,5 +1,5 @@
 // src/inet/node/inet/MyStandardHost_Udp_Ipv4.ned
-
+ 
 package inet.node.inet;
 
 import inet.node.base.MyApplicationLayerNodeBase_Udp_Ipv4;

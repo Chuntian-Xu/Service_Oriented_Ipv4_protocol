@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NodeConfigurator.ned
-
+ 
 package inet.networklayer.configurator.ipv4;
 
 import inet.networklayer.configurator.contract.IIpv4NodeConfigurator;
@@ -15,6 +15,9 @@ simple Ipv4NodeConfigurator like IIpv4NodeConfigurator {
 
         string sidTableModule; // new added
         bool configureSidTable = default(true);  // new added
+        
+        string cidTableModule; // new added
+        bool configureCidTable = default(true);  // new added
 }
 
 

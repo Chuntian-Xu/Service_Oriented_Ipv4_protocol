@@ -1,4 +1,4 @@
-// src/inet/networklayer/configurator/base/NetworkConfiguratorBase.h
+// src/inet/networklayer/configurator/base/NetworkConfiguratorBase.h 
 
 #ifndef __INET_NETWORKCONFIGURATORBASE_H
 #define __INET_NETWORKCONFIGURATORBASE_H
@@ -14,6 +14,7 @@
 #include "inet/networklayer/contract/IRoutingTable.h"
 
 #include "inet/networklayer/contract/ISidTable.h" // new added
+#include "inet/networklayer/contract/ICidTable.h" // new added
 
 
 namespace inet {
@@ -38,6 +39,7 @@ class INET_API NetworkConfiguratorBase : public cSimpleModule, public L3AddressR
         IRoutingTable *routingTable = nullptr;
 
         ISidTable *sidTable = nullptr;// new added
+        ICidTable *cidTable = nullptr;// new added
 
         std::vector<InterfaceInfo *> interfaceInfos;
 
@@ -177,6 +179,7 @@ class INET_API NetworkConfiguratorBase : public cSimpleModule, public L3AddressR
     virtual IRoutingTable *findRoutingTable(Node *node);
 
     virtual ISidTable *findSidTable(Node *node); // new added
+    virtual ICidTable *findCidTable(Node *node); // new added
 
     // generic helper functions
     virtual void dumpTopology(Topology& topology);

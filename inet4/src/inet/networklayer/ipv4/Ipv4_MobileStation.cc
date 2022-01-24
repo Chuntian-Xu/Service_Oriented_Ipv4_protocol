@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4_MobileStation.cc
+// src/inet/networklayer/ipv4/Ipv4_MobileStation.cc 
 
 #include <stdlib.h>
 #include <string.h>
@@ -36,6 +36,7 @@
 #include "inet/networklayer/ipv4/Ipv4OptionsTag_m.h"
 
 #include "inet/networklayer/ipv4/IIpv4SidTable.h"  // new added
+#include "inet/networklayer/ipv4/IIpv4CidTable.h"  // new added
 #include "inet/networklayer/ipv4/Ipv4ServiceHeader_m.h"  // new added
 #include "Ipv4_MobileStation.h"  // new added
 
@@ -60,7 +61,10 @@ void Ipv4_MobileStation::initialize(int stage) {
     if (stage == INITSTAGE_LOCAL) {
         ift = getModuleFromPar<IInterfaceTable>(par("interfaceTableModule"), this);
         rt = getModuleFromPar<IIpv4RoutingTable>(par("routingTableModule"), this);
+
         st = getModuleFromPar<IIpv4SidTable>(par("sidTableModule"), this); // new added
+        ct = getModuleFromPar<IIpv4CidTable>(par("cidTableModule"), this); // new added
+
         arp = getModuleFromPar<IArp>(par("arpModule"), this);
         icmp = getModuleFromPar<Icmp>(par("icmpModule"), this);
 
@@ -136,7 +140,7 @@ void Ipv4_MobileStation::refreshDisplay() const
 
 // ^-^
 void Ipv4_MobileStation::handleRequest(Request *request) {
-//    EV_INFO<<"Ipv4_MobileStation::handleRequest(Request *request) \n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_MobileStation::handleRequest(Request *request) \n"; // new added
     auto ctrl = request->getControlInfo();
     if (ctrl == nullptr)
         throw cRuntimeError("Request '%s' arrived without controlinfo", request->getName());
@@ -185,9 +189,7 @@ void Ipv4_MobileStation::handleMessageWhenUp(cMessage *msg) {
 //    EV_INFO<<"!!! --> Ipv4_MobileStation::handleMessageWhenUp(cMessage *msg)\n"; // new added
     if (msg->arrivedOn("transportIn")) {    //TODO packet->getArrivalGate()->getBaseId() == transportInGateBaseId
         if (auto request = dynamic_cast<Request *>(msg)) handleRequest(request);
-        else {
-            handlePacketFromHL(check_and_cast<Packet*>(msg));
-        }
+        else handlePacketFromHL(check_and_cast<Packet*>(msg));
     }
     else if (msg->arrivedOn("queueIn")) {    // from network
         EV_INFO << "Received " << msg << " from network.\n";
@@ -238,14 +240,14 @@ const InterfaceEntry *Ipv4_MobileStation::getSourceInterface(Packet *packet)
 
 // ^-^
 const InterfaceEntry *Ipv4_MobileStation::getDestInterface(Packet *packet) {
-//    EV_INFO<<"   !--> Ipv4_MobileStation::getDestInterface(Packet *packet)\n"; // new added
+//    EV_INFO<<"!!! --> Ipv4_MobileStation::getDestInterface(Packet *packet)\n"; // new added
     auto tag = packet->findTag<InterfaceReq>();
     return tag != nullptr ? ift->getInterfaceById(tag->getInterfaceId()) : nullptr;
 }
 
 // ^-^
 Ipv4Address Ipv4_MobileStation::getNextHop(Packet *packet) {
-//    EV_INFO<<"   !--> Ipv4_MobileStation::getNextHop(Packet *packet)\n";
+//    EV_INFO<<"!!! --> Ipv4_MobileStation::getNextHop(Packet *packet)\n";
     auto tag = packet->findTag<NextHopAddressReq>();
     return tag != nullptr ? tag->getNextHopAddress().toIpv4() : Ipv4Address::UNSPECIFIED_ADDRESS;
 }
@@ -254,7 +256,7 @@ Ipv4Address Ipv4_MobileStation::getNextHop(Packet *packet) {
 void Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) {
     service_flag = true; // ^-^ new added !!!
     EV_INFO<<"!!! --> Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) --> service_flag == true\n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
+//    EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
@@ -304,25 +306,26 @@ void Ipv4_MobileStation::handleIncomingDatagram_Service(Packet *packet) {
     EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added
     ASSERT(packet);
     emit(packetReceivedFromLowerSignal, packet);
-    //-----------------decapsulate-----------------
-//    EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
+    //-----------------解ipv4_Service包-----------------
     const auto& ipv4ServiceHeader = removeNetworkProtocolHeader<Ipv4ServiceHeader>(packet);
-//    EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n";
-//    EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
-    ServiceId srcServiceId=ipv4ServiceHeader->getSrcServiceId();
-    ServiceId destServiceId=ipv4ServiceHeader->getDestServiceId();
-    EV_INFO << "    --> srcServiceId: "<<srcServiceId<<"  destServiceId: "<<destServiceId<<"\n";
+    ClientId clientId=ipv4ServiceHeader->getClientId();
+    ServiceId serviceId=ipv4ServiceHeader->getServiceId();
+    EV_INFO << "    --> ipv4ServiceHeader ("<<ipv4ServiceHeader->getChunkLength()<<")"<<" [clientId: "<<clientId<<" | serviceId: "<<serviceId<<"] \n";
+    //-----------------查表-----------------
+    int cidNum = ct->getNumCids();
     int sidNum = st->getNumSids();
-//    EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
     Ipv4Address srcIpaddr;
     Ipv4Address destIpaddr;
+    for(int i=0; i<cidNum; ++i) {
+        Ipv4Cid* cid = ct->getCid(i);
+        if(cid->getCid() == clientId) destIpaddr = cid->getIpaddr();
+    }
     for(int i=0; i<sidNum; ++i) {
         Ipv4Sid* sid = st->getSid(i);
-        if(sid->getSid() == srcServiceId)  srcIpaddr = sid->getIpaddr();
-        else if(sid->getSid() == destServiceId) destIpaddr = sid->getIpaddr();
+        if(sid->getSid() == serviceId) srcIpaddr = sid->getIpaddr();
     }
-//    EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
-    //----------------encapsulate----------------
+    EV_INFO << "    --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
+    //----------------封装IP包----------------
     const auto& ipv4Header = makeShared<Ipv4Header>();
     ipv4Header->setSrcAddress(srcIpaddr);
     ipv4Header->setDestAddress(destIpaddr);
@@ -1199,8 +1202,8 @@ void Ipv4_MobileStation::sendDatagramToOutput(Packet *packet) {
 
 // ^-^  new added 去掉Ipv4Header,添加Ipv4HeaderService,然后向下发送到mac层
 void Ipv4_MobileStation::sendDatagramToOutput_Service(Packet *packet) {
-    EV_INFO << "!!! --> Ipv4_MobileStation::sendDatagramToOutput_Service(Packet *packet) \n"; // new added
-    EV_INFO<<"    --> packet: "<<packet<<"\n";// new added
+    EV_INFO << "!!! --> Ipv4_MobileStation::sendDatagramToOutput_Service(Packet *packet) \n";
+    EV_INFO<< "    --> packet: "<<packet<<"\n";
     const InterfaceEntry *ie = ift->getInterfaceById(packet->getTag<InterfaceReq>()->getInterfaceId());
     auto nextHopAddressReq = packet->removeTag<NextHopAddressReq>();
     Ipv4Address nextHopAddr = nextHopAddressReq->getNextHopAddress().toIpv4();
@@ -1215,33 +1218,31 @@ void Ipv4_MobileStation::sendDatagramToOutput_Service(Packet *packet) {
         else {
             ASSERT2(pendingPackets.find(nextHopAddr) == pendingPackets.end(), "Ipv4-ARP error: nextHopAddr found in ARP table, but Ipv4 queue for nextHopAddr not empty");
             packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);
-            //-----------------new added-----------------
-//            EV_INFO << "   --> packet before removeNetworkProtocolHeader:"<<packet<<"\n";
+            //-----------------解IP包-----------------
             const auto& ipv4Header = removeNetworkProtocolHeader<Ipv4Header>(packet);
-//            EV_INFO << "    --> ipv4Header:"<<ipv4Header<<"\n";
-//            EV_INFO << "   --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
             Ipv4Address srcIpaddr=ipv4Header->getSrcAddress();
             Ipv4Address destIpaddr=ipv4Header->getDestAddress();
-//            EV_INFO << "   --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
+            EV_INFO << "    --> srcIpaddr: "<<srcIpaddr<<"  destIpaddr: "<<destIpaddr<<"\n";
+            EV_INFO << "    --> packet after removeNetworkProtocolHeader:"<<packet<<"\n";
+            //-----------------查表-----------------
+            int cidNum = ct->getNumCids();
             int sidNum = st->getNumSids();
-//            EV_INFO << "   --> sidNum: "<<sidNum<<"\n";
-            ServiceId srcServiceId;
-            ServiceId destServiceId;
+            ClientId clientId;
+            ServiceId serviceId;
+            for(int i=0; i<cidNum; ++i) {
+                Ipv4Cid* cid = ct->getCid(i);
+                if(cid->getIpaddr() == srcIpaddr) clientId = cid->getCid();
+            }
             for(int i=0; i<sidNum; ++i) {
                 Ipv4Sid* sid = st->getSid(i);
-                if(sid->getIpaddr() == srcIpaddr) srcServiceId = sid->getSid();
-                else if(sid->getIpaddr() == destIpaddr) destServiceId = sid->getSid();
+                if(sid->getIpaddr() == destIpaddr) serviceId = sid->getSid();
             }
-            EV_INFO << "    --> srcServiceId: "<<srcServiceId<<"  destServiceId: "<<destServiceId<<"\n";
-
+            //-----------------封装ipv4_Service包-----------------
             const auto& ipv4ServiceHeader = makeShared<Ipv4ServiceHeader>();
-            ipv4ServiceHeader->setSrcServiceId(srcServiceId);
-            ipv4ServiceHeader->setDestServiceId(destServiceId);
-//            EV_INFO << "    --> ipv4ServiceHeader:"<<ipv4ServiceHeader<<"\n"; // new added
-            insertNetworkProtocolHeader(packet, Protocol::ipv4, ipv4ServiceHeader);
-//            EV_INFO<<"    --> packet afer insert ipv4HeaderService: "<<packet<<"\n"; // new added
-            //-------------------------------------------
-//            EV_INFO << "    --> sendPacketToNIC: "<< packet <<"\n"; // new added
+            ipv4ServiceHeader->setClientId(clientId);
+            ipv4ServiceHeader->setServiceId(serviceId);
+            insertNetworkProtocolHeader_Service(packet, Protocol::ipv4_service, ipv4ServiceHeader);
+            EV_INFO << "    --> ipv4ServiceHeader ("<<ipv4ServiceHeader->getChunkLength()<<")"<<" [clientId: "<<ipv4ServiceHeader->getClientId()<<" | serviceId: "<<ipv4ServiceHeader->getServiceId()<<"] \n";
             sendPacketToNIC(packet);
         }
     }

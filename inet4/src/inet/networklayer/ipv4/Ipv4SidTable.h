@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4SidTable.h
+// src/inet/networklayer/ipv4/Ipv4SidTable.h 
 
 #ifndef __INET_IPV4SIDTABLE_H
 #define __INET_IPV4SIDTABLE_H
@@ -39,7 +39,7 @@ class INET_API Ipv4SidTable : public cSimpleModule, public IIpv4SidTable,
     // set sid Id
     virtual void configureSidId();
 
-    // invalidates routing cache and local addresses cache
+    // invalidates sid cache and local addresses cache
     virtual void invalidateCache();
 
     // helper for sorting ServiceId table, used by addSid()
@@ -79,7 +79,7 @@ class INET_API Ipv4SidTable : public cSimpleModule, public IIpv4SidTable,
     /** @name ServiceId table manipulation */
     //@{
     /**
-     * Returns the total number of routes.
+     * Returns the total number of sids.
      */
     virtual int getNumSids() const override { return sids.size(); }
     /**
@@ -87,7 +87,7 @@ class INET_API Ipv4SidTable : public cSimpleModule, public IIpv4SidTable,
      */
     virtual Ipv4Sid *getSid(int k) const override;
     /**
-     * Adds a Ipv4sid to the sid table. Ipv4Sid are allowed to be modified
+     * Adds a Ipv4Cid to the sid table. Ipv4Sid are allowed to be modified
      * while in the sid table. (There is a notification mechanism that
      * allows sid table internals to be updated on a sid entry change.)
      */

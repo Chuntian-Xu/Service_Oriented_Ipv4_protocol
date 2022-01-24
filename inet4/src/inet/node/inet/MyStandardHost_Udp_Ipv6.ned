@@ -1,4 +1,4 @@
-//
+// 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Lesser General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
@@ -21,7 +21,7 @@ import inet.node.base.MyApplicationLayerNodeBase_Udp_Ipv6;
 // IPv6 host with TCP, SCTP and UDP layers and applications.
 // see ~StandardHost for configuration.
 //
-module MyStandardHost6_Udp_Ipv6 extends MyApplicationLayerNodeBase_Udp_Ipv6 {
+module MyStandardHost_Udp_Ipv6 extends MyApplicationLayerNodeBase_Udp_Ipv6 {
     parameters:
         @display("i=device/pc2");
         xml routes = default(xml("<routingTable/>"));

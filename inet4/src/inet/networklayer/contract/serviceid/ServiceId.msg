@@ -1,4 +1,4 @@
-// src/inet/networklayer/contract/serviceid/ServiceId.msg
+// src/inet/networklayer/contract/serviceid/ServiceId.msg 
 
 import inet.common.INETDefs;
 

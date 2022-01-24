@@ -1,4 +1,4 @@
-// src/inet/networklayer/configurator/base/NetworkConfiguratorBase.cc
+// src/inet/networklayer/configurator/base/NetworkConfiguratorBase.cc 
 
 #include <set>
 
@@ -56,7 +56,7 @@ void NetworkConfiguratorBase::initialize(int stage) {
 //        EV_INFO << "!!! stage0 INITSTAGE_LOCAL !!! --> NetworkConfiguratorBase::initialize(int stage)\n"; // new added
         minLinkWeight = par("minLinkWeight");
         configureIsolatedNetworksSeparatly = par("configureIsolatedNetworksSeparatly").boolValue();
-        configuration = par("config"); // !!!找到源头了!!!
+        configuration = par("config"); // !!!
 //        EV_INFO<<"!!! configuration file Name: "<<configuration->getSourceFileName()<<"\n"<<"configuration file Loaction: " <<configuration->getSourceLocation() <<"\n"; // new added
     }
 }
@@ -94,6 +94,7 @@ void NetworkConfiguratorBase::extractTopology(Topology& topology) {
         node->routingTable = findRoutingTable(node);
 
         node->sidTable = findSidTable(node); // new added
+        node->cidTable = findCidTable(node); // new added
     }
 
     // extract links and interfaces
@@ -271,7 +272,8 @@ bool NetworkConfiguratorBase::isBridgeNode(Node *node)
 
 bool NetworkConfiguratorBase::isWirelessInterface(InterfaceEntry *interfaceEntry)
 {
-    return !strncmp(interfaceEntry->getInterfaceName(), "wlan", 4);
+//    return !strncmp(interfaceEntry->getInterfaceName(), "wlan", 4);  // 改成下面这行
+    return (!strncmp(interfaceEntry->getInterfaceName(), "wlan", 4)) || (!strncmp(interfaceEntry->getInterfaceName(), "wmtc", 4));  // new added
 }
 
 Topology::LinkOut *NetworkConfiguratorBase::findLinkOut(Node *node, int gateId)
@@ -563,6 +565,10 @@ IRoutingTable *NetworkConfiguratorBase::findRoutingTable(Node *node)
 
 // new added
 ISidTable *NetworkConfiguratorBase::findSidTable(Node *node) {
+    return nullptr;
+}
+// new added
+ICidTable *NetworkConfiguratorBase::findCidTable(Node *node) {
     return nullptr;
 }
 

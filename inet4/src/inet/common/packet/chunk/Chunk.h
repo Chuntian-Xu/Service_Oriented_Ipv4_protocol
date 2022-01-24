@@ -1,10 +1,10 @@
 // src/inet/common/packet/chunk/Chunk.h
-
+ 
 #ifndef __INET_CHUNK_H_
 #define __INET_CHUNK_H_
 
 #include <memory>
-
+ 
 #include "inet/common/MemoryInputStream.h"
 #include "inet/common/MemoryOutputStream.h"
 #include "inet/common/Ptr.h"
@@ -12,7 +12,7 @@
 #include "inet/common/packet/tag/RegionTagSet.h"
 #include "inet/common/TemporarySharedPtr.h"
 
-// checking chunk implementation is disabled by default
+// checking chunk implementation is disabled by default 
 #ifndef CHUNK_CHECK_IMPLEMENTATION_ENABLED
 #define CHUNK_CHECK_IMPLEMENTATION_ENABLED 0
 #endif

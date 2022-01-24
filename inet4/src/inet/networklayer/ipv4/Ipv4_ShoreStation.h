@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4_ShoreStation.h
+// src/inet/networklayer/ipv4/Ipv4_ShoreStation.h 
 
 #ifndef __INET_IPV4_SHORESTATION_H
 #define __INET_IPV4_SHORESTATION_H
@@ -25,7 +25,9 @@ class ArpPacket;
 class IcmpHeader;
 class IInterfaceTable;
 class IIpv4RoutingTable;
+
 class IIpv4SidTable;  // new added
+class IIpv4CidTable;  // new added
 
 class INET_API Ipv4_ShoreStation : public OperationalBase, public NetfilterBase, public INetworkProtocol, public IProtocolRegistrationListener, public cListener
 {
@@ -61,7 +63,10 @@ class INET_API Ipv4_ShoreStation : public OperationalBase, public NetfilterBase,
 
     IIpv4RoutingTable *rt = nullptr;
     IInterfaceTable *ift = nullptr;
+
     IIpv4SidTable *st = nullptr; // new added
+    IIpv4CidTable *ct = nullptr; // new added
+
     IArp *arp = nullptr;
     Icmp *icmp = nullptr;
     int transportInGateBaseId = -1;

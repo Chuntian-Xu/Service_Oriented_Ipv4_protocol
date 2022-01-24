@@ -1,5 +1,5 @@
 // /inet/tutorials/configurator/beifenConfiguratorA.ned
-
+ 
 package inet.tutorials.configurator;
 
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
@@ -53,7 +53,7 @@ network beifenConfiguratorA {
 
         switch0: EtherSwitch {
             @display("p=518.4975,449.9025");
-        }
+        } 
         switch1: EtherSwitch {
             @display("p=1099.5375,449.9025");
         }

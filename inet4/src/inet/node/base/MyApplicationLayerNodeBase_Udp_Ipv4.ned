@@ -1,5 +1,5 @@
 // src/inet/node/base/MyApplicationLayerNodeBase_Udp_Ipv4.ned
-
+ 
 package inet.node.base;
 
 import inet.common.MessageDispatcher;

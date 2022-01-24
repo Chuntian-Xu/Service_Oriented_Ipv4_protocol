@@ -1,4 +1,4 @@
-// src/inet/networklayer/common/L3Address.cc
+// src/inet/networklayer/common/L3Address.cc 
 
 #include "inet/linklayer/common/MacAddressType.h"
 #include "inet/networklayer/common/L3Address.h"
@@ -86,6 +86,9 @@ std::string L3Address::str() const {
 
         case L3Address::SERVICEID: //new added
             return toServiceId().str();
+
+        case L3Address::CLIENTID: //new added
+            return toClientId().str();
 
         case L3Address::IPv6:
             return toIpv6().str();

@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NodeConfigurator.cc
-
+ 
 #include "inet/common/ModuleAccess.h"
 #include "inet/common/lifecycle/ModuleOperations.h"
 #include "inet/common/lifecycle/NodeStatus.h"
@@ -16,6 +16,7 @@ Ipv4NodeConfigurator::Ipv4NodeConfigurator() { // constructor
     networkConfigurator = nullptr;
 
     sidTable = nullptr;// new added
+    cidTable = nullptr;// new added
 }
 
 // ^-^ 被调用
@@ -38,6 +39,8 @@ void Ipv4NodeConfigurator::initialize(int stage) {
 
         sidTable = getModuleFromPar<IIpv4SidTable>(par("sidTableModule"), this);  // !!! 获取sidTableModule
 //        EV_INFO<<"!!! get sidTable" <<"\n";  // new added
+        cidTable = getModuleFromPar<IIpv4CidTable>(par("cidTableModule"), this);  // !!! 获取cidTableModule
+//        EV_INFO<<"!!! get cidTable" <<"\n";  // new added
 
         if (!networkConfiguratorPath[0]) networkConfigurator = nullptr;
         else {
@@ -57,10 +60,13 @@ void Ipv4NodeConfigurator::initialize(int stage) {
             configureAllInterfaces();
     }
     else if (stage == INITSTAGE_STATIC_ROUTING) { // !!! stage7
-//        EV_INFO<<"!!! stage7 INITSTAGE_STATIC_ROUTING !!! --> Ipv4NodeConfigurator::initialize(int stage) \n";  // new added
+        EV_INFO<<"!!! stage7 INITSTAGE_STATIC_ROUTING !!! --> Ipv4NodeConfigurator::initialize(int stage) \n";  // new added
         if ((!nodeStatus || nodeStatus->getState() == NodeStatus::UP) && networkConfigurator) {
             configureRoutingTable();
+
             configureSidTable(); // new added
+            configureCidTable(); // new added
+
             cModule *node = getContainingNode(this);
             // get a pointer to the host module and IInterfaceTable
             node->subscribe(interfaceCreatedSignal, this);
@@ -159,6 +165,13 @@ void Ipv4NodeConfigurator::configureSidTable() {
 //    EV_INFO<<"\n !!! --> Ipv4NodeConfigurator::configureSidTable()\n"; // new added
     ASSERT(networkConfigurator);
     if (par("configureSidTable")) networkConfigurator->configureSidTable(sidTable);
+}
+
+// new added ^-^
+void Ipv4NodeConfigurator::configureCidTable() {
+//    EV_INFO<<"\n !!! --> Ipv4NodeConfigurator::configureCidTable()\n"; // new added
+    ASSERT(networkConfigurator);
+    if (par("configureCidTable")) networkConfigurator->configureCidTable(cidTable);
 }
 
 

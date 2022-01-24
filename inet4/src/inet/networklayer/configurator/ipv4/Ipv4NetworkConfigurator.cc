@@ -1,5 +1,5 @@
 // src/inet/networklayer/configurator/ipv4/Ipv4NetworkConfigurator.cc
-
+ 
 #include <set>
 
 #include "inet/common/INETUtils.h"
@@ -13,6 +13,7 @@
 #include "inet/networklayer/ipv4/IIpv4RoutingTable.h"
 
 #include "inet/networklayer/ipv4/IIpv4SidTable.h" // new added
+#include "inet/networklayer/ipv4/IIpv4CidTable.h" // new added
 
 namespace inet {
 
@@ -117,6 +118,9 @@ void Ipv4NetworkConfigurator::computeConfiguration() {
     // !!! read and configure sids from the XML configuration
     readManualSidConfiguration(topology); // new added
 
+    // !!! read and configure sids from the XML configuration
+    readManualCidConfiguration(topology); // new added
+
     printElapsedTime("computeConfiguration", initializeStartTime);
 }
 
@@ -144,6 +148,8 @@ void Ipv4NetworkConfigurator::dumpConfiguration() {
 
     // print sids to module output
     if (par("dumpSids")) TIME(dumpSids(topology)); // new added
+
+    if (par("dumpCids")) TIME(dumpCids(topology)); // new added
 }
 
 void Ipv4NetworkConfigurator::configureAllInterfaces() {
@@ -209,6 +215,23 @@ void Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable) {
         if (node->sidTable == sidTable) {
 //            EV_INFO << "!!! node->sidTable == sidTable \n"; // new added
             configureSidTable(node);
+        }
+    }
+}
+
+// new added
+void Ipv4NetworkConfigurator::configureCidTable(IIpv4CidTable *cidTable) {
+//    EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureCidTable(IIpv4CidTable *cidTable) \n";
+    ensureConfigurationComputed(topology);
+    // TODO: avoid linear search
+    int NumNodes=topology.getNumNodes(); //统计网络拓扑中的Node个数
+//    EV_INFO << "!!! Ipv4NetworkConfigurator::configureCidTable(IIpv4CidTable *cidTable)--> NumNodes: " << NumNodes <<"\n"; // new added
+    //遍历每一个Node，为其配置CidTable
+    for (int i = 0; i < NumNodes; i++) {
+        Node *node = (Node *)topology.getNode(i);
+        if (node->cidTable == cidTable) {
+//            EV_INFO << "!!! node->cidTable == cidTable \n"; // new added
+            configureCidTable(node);
         }
     }
 }
@@ -290,6 +313,24 @@ void Ipv4NetworkConfigurator::configureSidTable(Node *node) {
         clone->setSid(original->getSid());
         clone->setInterface(original->getInterface());
         node->sidTable->addSid(clone);
+    }
+}
+// new adde
+void Ipv4NetworkConfigurator::configureCidTable(Node *node) {
+//    EV_INFO<<"!!! --> Ipv4NetworkConfigurator::configureCidTable(Node *node)\n"; // new added
+    EV_DETAIL << "Configuring cid table of " << node->getModule()->getFullPath() << ".\n";
+    int SizeStaticCids = node->staticCids.size();
+//    EV_INFO<<"!!! SizeStaticCids: "<<SizeStaticCids<<"\n"; // new added
+    for (size_t i = 0; i < SizeStaticCids; i++) {
+        Ipv4Cid *original = node->staticCids[i];
+//        EV_INFO<<"!!! staticCids["<< i <<"]: "<<original->getIpaddr()<<" "<<original->getCid()<<"\n"; // new added
+
+        Ipv4Cid *clone = new Ipv4Cid();
+        clone->setSourceType(original->getSourceType());
+        clone->setIpaddr(original->getIpaddr());
+        clone->setCid(original->getCid());
+        clone->setInterface(original->getInterface());
+        node->cidTable->addCid(clone);
     }
 }
 
@@ -851,12 +892,24 @@ void Ipv4NetworkConfigurator::dumpRoutes(Topology& topology) {
 
 // new added
 void Ipv4NetworkConfigurator::dumpSids(Topology& topology) {
-//    EV_INFO << "!!! --> Ipv4NetworkConfigurator::dumpRoutes(Topology& topology)\n";// new added
+//    EV_INFO << "!!! --> Ipv4NetworkConfigurator::dumpSids(Topology& topology)\n";// new added
     for (int i = 0; i < topology.getNumNodes(); i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->sidTable) {
             EV_INFO << "Node " << node->module->getFullPath() << endl;
             check_and_cast<IIpv4SidTable *>(node->sidTable)->printSidTable();
+        }
+    }
+}
+
+// new added
+void Ipv4NetworkConfigurator::dumpCids(Topology& topology) {
+//    EV_INFO << "!!! --> Ipv4NetworkConfigurator::dumpCids(Topology& topology)\n";// new added
+    for (int i = 0; i < topology.getNumNodes(); i++) {
+        Node *node = (Node *)topology.getNode(i);
+        if (node->cidTable) {
+            EV_INFO << "Node " << node->module->getFullPath() << endl;
+            check_and_cast<IIpv4CidTable *>(node->cidTable)->printCidTable();
         }
     }
 }
@@ -1025,6 +1078,28 @@ void Ipv4NetworkConfigurator::dumpConfig(Topology& topology) {
             }
         }
     }
+    // cids
+    for (int i = 0; i < topology.getNumNodes(); i++) {  // new added
+        Node *node = (Node *)topology.getNode(i);
+        IIpv4CidTable *cidTable = dynamic_cast<IIpv4CidTable *>(node->cidTable);
+        if (cidTable) {
+            for (int j = 0; j < cidTable->getNumCids(); j++) {
+                Ipv4Cid *cid = cidTable->getCid(j);
+                std::stringstream stream;
+                Ipv4Address IpAddress = cid->getIpaddr();
+                ClientId ClientId = cid->getCid();
+                stream << "   <cid hosts=\"" << node->module->getFullPath();
+                stream << "\" ipaddr=\"";
+                if (cid->getIpaddr().isUnspecified()) stream << "*";
+                else stream << cid->getIpaddr();
+                stream << "\" ClientId Id=\"";
+                if (cid->getCid().isUnspecified()) stream << "*";
+                else stream << cid->getCid();
+                stream <<"\"/>" << endl;
+                fprintf(f, "%s", stream.str().c_str());
+            }
+        }
+    }
     fprintf(f, "</config>");
     fflush(f);
     fclose(f);
@@ -1183,6 +1258,51 @@ void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
         }
         catch (std::exception& e) {
             throw cRuntimeError("Error in XML <sid> element at %s: %s", sidElement->getSourceLocation(), e.what());
+        }
+    }
+}
+
+// new added
+void Ipv4NetworkConfigurator::readManualCidConfiguration(Topology& topology) {
+//    EV_INFO<<"\n !!! --> Ipv4NetworkConfigurator::readCidConfiguration(Topology& topology) \n";
+    // configuration在NetworkConfiguratorBase::initialize(int stage)定义
+    cXMLElementList cidElements = configuration->getChildrenByTagName("cid");
+    for (auto & cidElement : cidElements) {
+        const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*cidElement, "hosts");
+        const char *ipaddrAttr = xmlutils::getMandatoryAttribute(*cidElement, "ipaddr");
+        const char *cidAttr = cidElement->getAttribute("cid");
+//        EV_INFO<<"!!! ipaddr: "<<ipaddrAttr<<"  "<<"cid: "<<cidAttr<<"\n"; //new added
+        try {
+            // parse and check the attributes
+            Ipv4Address ipaddr;
+            if (!isEmpty(ipaddrAttr) && strcmp(ipaddrAttr, "*")) ipaddr = resolve(ipaddrAttr, L3AddressResolver::ADDR_IPv4).toIpv4();
+            ClientId cid;
+            if (!isEmpty(cidAttr) && strcmp(cidAttr, "*")) cid = resolve(cidAttr, L3AddressResolver::ADDR_CLIENTID).toClientId();
+
+            // find matching host(s), and add the cid
+            Matcher atMatcher(hostAttr);
+            for (int i = 0; i < topology.getNumNodes(); i++) {
+                Node *node = (Node *)topology.getNode(i);
+//                EV_INFO<<"!!!!!!!!! node->cidTable: "<<node->cidTable<<"\n"; // new added
+                if (node->cidTable) {
+                    std::string hostFullPath = node->module->getFullPath();
+                    std::string hostShortenedFullPath = hostFullPath.substr(hostFullPath.find('.') + 1);
+                    if (atMatcher.matches(hostShortenedFullPath.c_str()) || atMatcher.matches(hostFullPath.c_str())) {
+                        InterfaceEntry *ie;
+                        // create and add cid
+                        Ipv4Cid *ipv4Cid = new Ipv4Cid();
+                        ipv4Cid->setIpaddr(ipaddr);
+                        ipv4Cid->setCid(cid);
+                        ipv4Cid->setInterface(ie);
+                        ipv4Cid->setSourceType(ICid::MANUAL);
+                        node->staticCids.push_back(ipv4Cid);
+                    }
+                }
+            }
+
+        }
+        catch (std::exception& e) {
+            throw cRuntimeError("Error in XML <cid> element at %s: %s", cidElement->getSourceLocation(), e.what());
         }
     }
 }
@@ -1400,6 +1520,11 @@ IRoutingTable *Ipv4NetworkConfigurator::findRoutingTable(NetworkConfiguratorBase
 // new added
 ISidTable *Ipv4NetworkConfigurator::findSidTable(NetworkConfiguratorBase::Node *node) {
     return L3AddressResolver().findIpv4SidTableOf(node->module);
+}
+
+// new added
+ICidTable *Ipv4NetworkConfigurator::findCidTable(NetworkConfiguratorBase::Node *node) {
+    return L3AddressResolver().findIpv4CidTableOf(node->module);
 }
 
 bool Ipv4NetworkConfigurator::containsRoute(const std::vector<Ipv4Route *>& routes, Ipv4Route *route)

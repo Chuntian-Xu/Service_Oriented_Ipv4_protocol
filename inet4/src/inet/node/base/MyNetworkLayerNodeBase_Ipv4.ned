@@ -1,4 +1,4 @@
-package inet.node.base;
+package inet.node.base; 
 
 import inet.common.MessageDispatcher;
 import inet.networklayer.contract.INetworkLayer;  // !!!!!!*******  inet.networklayer.contract.INetworkLayer.ned

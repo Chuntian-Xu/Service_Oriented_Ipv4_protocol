@@ -1,4 +1,4 @@
-// src/inet/networklayer/ipv4/Ipv4NetworkLayer.ned
+// src/inet/networklayer/ipv4/Ipv4NetworkLayer.ned 
 
 package inet.networklayer.ipv4;
 
@@ -11,7 +11,8 @@ import inet.networklayer.contract.INetworkLayer;
 // Network layer of an IPv4 node.
 //
 
-module Ipv4NetworkLayer like INetworkLayer {
+module Ipv4NetworkLayer like INetworkLayer
+{
     parameters:
         bool forwarding = default(false);
         bool multicastForwarding = default(false);
@@ -21,10 +22,13 @@ module Ipv4NetworkLayer like INetworkLayer {
         *.multicastForwarding = multicastForwarding;
         *.interfaceTableModule = default(absPath(interfaceTableModule));
         *.routingTableModule = default(absPath(".routingTable"));
-        
+
         *.sidTableModule = default(absPath(".sidTable")); // new added
-        *.configureSidTable =false; // new added
-		
+        *.configureSidTable = false; // new added
+
+        *.cidTableModule = default(absPath(".cidTable")); // new added
+        *.configureCidTable = false; // new added
+
         *.arpModule = default(absPath(".arp"));
         *.icmpModule = default(absPath(".icmp"));
         @class(::inet::Ipv4NetworkLayer);
@@ -46,11 +50,18 @@ module Ipv4NetworkLayer like INetworkLayer {
             parameters:
                 @display("p=109.2,198.9;is=s");
         }
+
         // ServiceId Table module  // new added
-        sidTable: Ipv4SidTable {  
+        sidTable: Ipv4SidTable {
             parameters:
                 @display("p=109,392;is=s");
         }
+        // ServiceId Table module  // new added
+        cidTable: Ipv4CidTable {
+            parameters:
+                @display("p=109,473;is=s");
+        }
+
         natTable: Ipv4NatTable {
             parameters:
                 @display("p=109,301;is=s");
