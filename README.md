@@ -1,5 +1,5 @@
 # omnet++/inet_Service-Id-Table 
-Implement Ipv4 SoI architecture based on INET framework on OMNeT++.
+Define and implement the basic architecture of service-based network layer protocols for Ipv4 based on INET framework on OMNeT++.
 # Version
 	Operating system: Windows 10-64
 	OMNeT++ 5.6.2
