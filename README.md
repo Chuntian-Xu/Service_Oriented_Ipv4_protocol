@@ -26,9 +26,9 @@ Define and implement the basic architecture of service-based network layer proto
 		src/inet/networklayer/ipv4/Ipv4Cid.h
 		src/inet/networklayer/ipv4/Ipv4Cid.cc
 		
-	3. ICid:
-		src/inet/networklayer/contract/ICid.h
-		src/inet/networklayer/contract/ICid.cc
+	3. ISid:
+		src/inet/networklayer/contract/ISid.h
+		src/inet/networklayer/contract/ISid.cc
 
 	4. Ipv4Sid:
 		src/inet/networklayer/ipv4/Ipv4Sid.msg
