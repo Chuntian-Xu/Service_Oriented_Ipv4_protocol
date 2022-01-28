@@ -21,19 +21,19 @@ Define and implement the basic architecture of service-based network layer proto
 		src/inet/networklayer/contract/ICid.h
 		src/inet/networklayer/contract/ICid.cc
 		
-	2. Ipv4Sid:
-		src/inet/networklayer/ipv4/Ipv4Sid.msg
-		src/inet/networklayer/ipv4/Ipv4Sid.h
-		src/inet/networklayer/ipv4/Ipv4Sid.cc
+	2. Ipv4Cid:
+		src/inet/networklayer/ipv4/Ipv4Cid.msg
+		src/inet/networklayer/ipv4/Ipv4Cid.h
+		src/inet/networklayer/ipv4/Ipv4Cid.cc
 		
 	3. ICid:
 		src/inet/networklayer/contract/ICid.h
 		src/inet/networklayer/contract/ICid.cc
 
-	4. Ipv4Cid:
-		src/inet/networklayer/ipv4/Ipv4Cid.msg
-		src/inet/networklayer/ipv4/Ipv4Cid.h
-		src/inet/networklayer/ipv4/Ipv4Cid.cc
+	4. Ipv4Sid:
+		src/inet/networklayer/ipv4/Ipv4Sid.msg
+		src/inet/networklayer/ipv4/Ipv4Sid.h
+		src/inet/networklayer/ipv4/Ipv4Sid.cc
 		
 	(Ipv4CidTable & Ipv4SidTable)
 	1. ICidTable:
