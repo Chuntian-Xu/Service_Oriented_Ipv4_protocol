@@ -1,0 +1,57 @@
+<config>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient1" names="eth0" address="10.0.0.1" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" names="eth0" address="10.0.0.3" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient2" names="eth0" address="10.0.0.6" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" names="wmtc0" address="206.18.65.4" netmask="255.255.255.0" metric="2000"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" names="wmtc0" address="206.18.65.6" netmask="255.255.255.0" metric="2000"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" names="wmtc0" address="<unspec>" netmask="255.255.255.255" metric="2000"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" names="eth0" address="192.168.4.1" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient3" names="eth0" address="192.168.4.5" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient4" names="eth0" address="192.168.4.8" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" names="eth0" address="172.16.6.1" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient5" names="eth0" address="172.16.6.2" netmask="255.255.255.0" metric="20"/>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient6" names="eth0" address="172.16.6.3" netmask="255.255.255.0" metric="20"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient1" interfaces="eth0" address="224.0.0.1"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient2" interfaces="eth0" address="224.0.0.1"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" interfaces="wmtc0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" interfaces="wmtc0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" interfaces="wmtc0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient3" interfaces="eth0" address="224.0.0.1"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient4" interfaces="eth0" address="224.0.0.1"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" interfaces="eth0" address="224.0.0.1 224.0.0.2"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient5" interfaces="eth0" address="224.0.0.1"/>
+   <multicast-group hosts="SoI_Architecture_v3_m2m_3m.ServiceClient6" interfaces="eth0" address="224.0.0.1"/>
+   <wireless interfaces="SoI_Architecture_v3_m2m_3m.MobileStation_0%wmtc0 SoI_Architecture_v3_m2m_3m.MobileStation_1%wmtc0 SoI_Architecture_v3_m2m_3m.MobileStation_2%wmtc0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient1" destination="10.0.0.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient1" destination="*" netmask="*" gateway="10.0.0.3" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient2" destination="10.0.0.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient2" destination="*" netmask="*" gateway="10.0.0.3" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" destination="206.18.65.6" netmask="255.255.255.254" gateway="*" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" destination="10.0.0.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" destination="172.16.6.0" netmask="255.255.255.0" gateway="206.18.65.7" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" destination="192.168.4.0" netmask="255.255.255.0" gateway="206.18.65.6" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" destination="206.18.65.4" netmask="255.255.255.252" gateway="*" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" destination="10.0.0.0" netmask="255.255.255.0" gateway="206.18.65.4" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" destination="172.16.6.0" netmask="255.255.255.0" gateway="206.18.65.7" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" destination="192.168.4.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient3" destination="192.168.4.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient3" destination="*" netmask="*" gateway="192.168.4.1" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient4" destination="192.168.4.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient4" destination="*" netmask="*" gateway="192.168.4.1" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" destination="206.18.65.4" netmask="255.255.255.252" gateway="*" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" destination="10.0.0.0" netmask="255.255.255.0" gateway="206.18.65.4" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" destination="172.16.6.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" destination="192.168.4.0" netmask="255.255.255.0" gateway="206.18.65.6" interface="wmtc0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient5" destination="172.16.6.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient5" destination="*" netmask="*" gateway="172.16.6.1" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient6" destination="172.16.6.0" netmask="255.255.255.0" gateway="*" interface="eth0" metric="0"/>
+   <route hosts="SoI_Architecture_v3_m2m_3m.ServiceClient6" destination="*" netmask="*" gateway="172.16.6.1" interface="eth0" metric="0"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" ServiceId="10" IpAddress="120.198.203.28" UdpPort="8080"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" ServiceId="6800" IpAddress="205.193.114.80" UdpPort="8060"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" ServiceId="10" IpAddress="120.198.203.28" UdpPort="8080"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" ServiceId="6800" IpAddress="205.193.114.80" UdpPort="8060"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" ServiceId="10" IpAddress="120.198.203.28" UdpPort="8080"/>
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" ServiceId="6800" IpAddress="205.193.114.80" UdpPort="8060"/>
+</config>
