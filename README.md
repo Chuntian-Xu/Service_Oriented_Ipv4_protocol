@@ -1,7 +1,7 @@
 # omnet++/inet Service-Oriented-IPv4
 Implement the Service-Oriented-Ipv4-Protocol for 
 # Version
-	Operating system: Architecture_1,3,4(Windows10-64); Architecture_2(Ubuntu18.04.6 LTS)
+	Operating system: Architecture_1,3,4(Windows10-64/Ubuntu18.04.6 LTS); Architecture_2(Ubuntu18.04.6 LTS)
 	OMNeT++ 5.6.2
 	INET 4.2.5
 # Directory Structure
