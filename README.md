@@ -19,4 +19,4 @@ Implement the Service-Oriented-Ipv4-Protocol for
 * Chuntian Xu(Southeast University, Nanjing, China)
 chuntianxu2020@163.com
 # Notice
-If you want to use this code for further development, please contact me for approval !
+If you want to use this code for further development, please contact me !
