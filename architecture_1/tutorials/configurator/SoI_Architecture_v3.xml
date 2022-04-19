@@ -1,0 +1,50 @@
+<config>
+   <interface hosts="SoI_Architecture_v3.ServiceClient1" names="eth0" address="10.0.0.1" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3.ServiceClient2" names="eth0" address="10.0.0.6" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3.MobileStation_1" names="eth0" towards="ServiceClient1" address="10.0.0.3" />
+   <interface hosts="SoI_Architecture_v3.MobileStation_1" names="wmtc0" towards="ShoreStation" address="10.1.0.1" />
+   <interface hosts="SoI_Architecture_v3.ShoreStation" names="wmtc0" towards="MobileStation_1" address="10.1.0.2" />
+   
+   <interface hosts="SoI_Architecture_v3.ServiceClient3" names="eth0" address="192.168.4.5" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3.ServiceClient4" names="eth0" address="192.168.4.8" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3.MobileStation_2" names="eth0" towards="ServiceClient3" address="192.168.4.3" />
+   <interface hosts="SoI_Architecture_v3.MobileStation_2" names="wmtc0" towards="ShoreStation" address="10.1.0.3" />
+   <interface hosts="SoI_Architecture_v3.ShoreStation" names="wmtc1" towards="MobileStation_2" address="10.1.0.4" />
+
+   <wireless interfaces="SoI_Architecture_v3.MobileStation_1%wmtc0 SoI_Architecture_v3.ShoreStation%wmtc0 SoI_Architecture_v3.MobileStation_2%wmtc0 SoI_Architecture_v3.ShoreStation%wmtc1"/>
+
+   <interface hosts="SoI_Architecture_v3.ShoreStation" names="eth0" towards="router" address="132.255.168.62" />
+   <interface hosts="SoI_Architecture_v3.router" names="eth0" towards="ShoreStation" address="132.255.168.63" />
+   <interface hosts="SoI_Architecture_v3.router" names="eth1" towards="internet" address="202.108.22.5" />
+   
+   <interface hosts="SoI_Architecture_v3.internet" names="eth0" towards="router" address="202.108.22.6" />
+   <interface hosts="SoI_Architecture_v3.internet" names="eth1" towards="router1" address="201.164.147.55" />
+   <interface hosts="SoI_Architecture_v3.internet" names="eth2" towards="router2" address="219.152.168.22" />
+   
+   <interface hosts="SoI_Architecture_v3.router1" names="eth0" towards="internet" address="201.164.147.56" />
+   <interface hosts="SoI_Architecture_v3.router1" names="eth1" towards="Server1" address="205.193.114.79" />
+   
+   <interface hosts="SoI_Architecture_v3.router2" names="eth0" towards="internet" address="219.152.168.23" />
+   <interface hosts="SoI_Architecture_v3.router2" names="eth1" towards="Server2" address="120.198.208.27" />
+   
+   <interface hosts="SoI_Architecture_v3.Server1" names="eth0" address="205.193.114.80" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3.Server2" names="eth0" address="120.198.208.28" netmask="255.255.255.0" />
+
+   <sid hosts="SoI_Architecture_v3.MobileStation_1" sid="10" ipaddr="120.198.208.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3.MobileStation_1" sid="6800" ipaddr="205.193.114.80" udpport="8060" />
+   <cid hosts="SoI_Architecture_v3.MobileStation_1" ipaddr="10.0.0.1" udpport="2020" cid="23" />
+   <cid hosts="SoI_Architecture_v3.MobileStation_1" ipaddr="10.0.0.6" udpport="2011" cid="19" />
+
+   <sid hosts="SoI_Architecture_v3.MobileStation_2" sid="10" ipaddr="120.198.208.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3.MobileStation_2" sid="6800" ipaddr="205.193.114.80" udpport="8060" />
+   <cid hosts="SoI_Architecture_v3.MobileStation_2" ipaddr="192.168.4.5" udpport="3016" cid="56" />
+   <cid hosts="SoI_Architecture_v3.MobileStation_2" ipaddr="192.168.4.8" udpport="3022" cid="78" />
+
+   <sid hosts="SoI_Architecture_v3.ShoreStation" sid="10" ipaddr="120.198.208.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3.ShoreStation" sid="6800" ipaddr="205.193.114.80" udpport="8060" />
+   
+   <cidshore hosts="SoI_Architecture_v3.ShoreStation" cid="23" ipaddr="132.255.168.62" udpport="1025" mmsi="0A-AA-00-00-00-03" />
+   <cidshore hosts="SoI_Architecture_v3.ShoreStation" cid="19" ipaddr="132.255.168.62" udpport="1026" mmsi="0A-AA-00-00-00-03" />
+   <cidshore hosts="SoI_Architecture_v3.ShoreStation" cid="56" ipaddr="132.255.168.62" udpport="1027" mmsi="0A-AA-00-00-00-07" />
+   <cidshore hosts="SoI_Architecture_v3.ShoreStation" cid="78" ipaddr="132.255.168.62" udpport="1028" mmsi="0A-AA-00-00-00-07" />
+</config>

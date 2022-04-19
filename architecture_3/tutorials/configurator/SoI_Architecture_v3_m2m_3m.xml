@@ -1,0 +1,41 @@
+<config>
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient1" names="eth0" address="10.0.0.1" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient2" names="eth0" address="10.0.0.6" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" names="eth0" towards="ServiceClient1" address="10.0.0.3" />
+   
+   <wireless interfaces="SoI_Architecture_v3_m2m_3m.MobileStation_0%wmtc0 SoI_Architecture_v3_m2m_3m.MobileStation_1%wmtc0 SoI_Architecture_v3_m2m_3m.MobileStation_2%wmtc0 
+   SoI_Architecture_v3_m2m_3m.MobileStation_0%wmtc1 SoI_Architecture_v3_m2m_3m.MobileStation_1%wmtc1 SoI_Architecture_v3_m2m_3m.MobileStation_2%wmtc1" />
+   
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" names="wmtc0" towards="MobileStation_1" address="206.18.65.4" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" names="wmtc1" towards="MobileStation_2" address="206.18.65.5" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" names="wmtc0" towards="MobileStation_0" address="206.18.65.6" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" names="wmtc1" towards="MobileStation_2" address="206.18.65.7" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" names="wmtc0" towards="MobileStation_0" address="206.18.65.8" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" names="wmtc1" towards="MobileStation_1" address="206.18.65.9" netmask="255.255.255.0" />
+   
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" names="eth0" towards="ServiceClient3" address="192.168.4.1" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient3" names="eth0" address="192.168.4.5" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient4" names="eth0" address="192.168.4.8" netmask="255.255.255.0" />
+
+   <interface hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" names="eth0" towards="ServiceClient5" address="172.16.6.1" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient5" names="eth0" address="172.16.6.2" netmask="255.255.255.0" />
+   <interface hosts="SoI_Architecture_v3_m2m_3m.ServiceClient6" names="eth0" address="172.16.6.3" netmask="255.255.255.0" />
+
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" sid="10" ipaddr="120.198.203.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" sid="6800" ipaddr="205.193.114.80" udpport="6080" />
+
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" sid="10" ipaddr="120.198.203.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" sid="6800" ipaddr="205.193.114.80" udpport="6080" />
+   
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" sid="10" ipaddr="120.198.203.28" udpport="69" />
+   <sid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" sid="6800" ipaddr="205.193.114.80" udpport="6080" />
+   
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" ipaddr="10.0.0.1" udpport="49153" cid="23" />
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_0" ipaddr="10.0.0.6" udpport="65534" cid="19" />
+
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" ipaddr="192.168.4.5" udpport="56800" cid="61" />
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_1" ipaddr="192.168.4.8" udpport="62606" cid="46" />
+   
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" ipaddr="172.16.6.2" udpport="53322" cid="36" />
+   <cid hosts="SoI_Architecture_v3_m2m_3m.MobileStation_2" ipaddr="172.16.6.3" udpport="59631" cid="47" />
+</config>
