@@ -20,7 +20,7 @@ import inet.node.internetcloud.InternetCloud;
 
 network SoI_Architecture_v3
 {
-    @display("bgb=1555.4113,949.3825");
+    @display("bgb=1555.4113,949.3825,white");
     submodules:
         configurator: Ipv4NetworkConfigurator {
             @display("p=558.6923,86.9077");
@@ -33,36 +33,36 @@ network SoI_Architecture_v3
         }
 
         ServiceClient1: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/laptop;p=123.832504,245.78876");
+            @display("i=device/laptop;p=123.832504,245.78876;is=l");
         }
         ServiceClient2: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/laptop;p=123.832504,433.41376");
+            @display("i=device/laptop;p=123.832504,433.41376;is=l");
         }
         hub_1: EtherHub {
-            @display("p=302.07626,347.10626");
+            @display("p=302.07626,347.10626;is=n");
         }
         MobileStation_1: MyRouter_Udp_Ipv4_Wireless_MobileStation {
-            @display("p=484.0725,345.23");
+            @display("p=484.0725,345.23;is=l");
         }
 
         ServiceClient3: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/laptop;p=123.832504,622.91504");
+            @display("i=device/laptop;p=123.832504,622.91504;is=l");
         }
         ServiceClient4: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/laptop;p=123.832504,823.67377");
+            @display("i=device/laptop;p=123.832504,823.67377;is=l");
         }
         hub_2: EtherHub {
-            @display("p=302.07626,707.34625");
+            @display("p=302.07626,707.34625;is=n");
         }
         MobileStation_2: MyRouter_Udp_Ipv4_Wireless_MobileStation {
-            @display("p=484.0725,705.47003");
+            @display("p=484.0725,705.47003;is=l");
         }
 
         Server1: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/server;p=1482.2375,435.29");
+            @display("i=device/server;p=1482.2375,435.29;is=l");
         }
         Server2: MyStandardHost_Udp_Ipv4 {
-            @display("i=device/server;p=1482.2375,634.17255");
+            @display("i=device/server;p=1482.2375,634.17255;is=l");
         }
         router1: MyRouter_Udp_Ipv4 {
             @display("p=1328.385,476.5675");
@@ -72,13 +72,13 @@ network SoI_Architecture_v3
         }
         internet: InternetCloud {
 
-            @display("p=1155.77,547.865");
+            @display("p=1155.77,547.865;is=l");
         }
         router: MyRouter_Udp_Ipv4 {
             @display("p=949.3825,547.865");
         }
         ShoreStation: MyRouter_Udp_Ipv4_Wireless_ShoreStation {
-            @display("p=718.60376,545.9888");
+            @display("p=718.60376,545.9888;i=device/antennatower;is=l");
         }
 
     connections:
