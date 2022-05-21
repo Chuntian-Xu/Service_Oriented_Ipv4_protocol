@@ -17,7 +17,8 @@ Implement the Service-Oriented-Ipv4-Protocol based on OMNeT++/INET
 2. If there is no corresponding path in the source file, create a new folder according to the path of the program file in the program folder, and then copy the program into it;
 3. Rebuild
 # Contributors
-* Chuntian Xu(Southeast University, Nanjing, China)
+* Chuntian Xu(Southeast University, Nanjing, China)  
 chuntianxu2020@163.com
 # Notice
-If you want to use this code for further development, please contact me !
+This is the simulation code of the Thesis for my Academic Degree of Master of Engineering  
+If you want to use this code for further development, please contact me, thank you.
