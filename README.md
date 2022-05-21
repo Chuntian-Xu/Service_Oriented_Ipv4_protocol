@@ -18,7 +18,7 @@ Implement the Service-Oriented-Ipv4-Protocol based on OMNeT++/INET
 3. Rebuild
 # Contributors
 * Chuntian Xu(Southeast University, Nanjing, China)  
-email: chuntianxu2020@163.com
+email: chuntianxu2020@163.com  
 wechat: xctfdc
 # Notice
 This is the simulation code of the Thesis for my Academic Degree of Master of Engineering  
