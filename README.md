@@ -22,4 +22,4 @@ email: chuntianxu2020@163.com
 wechat: xctfdc
 # Notice
 This is the simulation code of the Thesis for my Academic Degree of Master of Engineering  
-If you want to use this code for further development, please contact me and let me know, thank you.
+If you want to use my code for secondary development or as part of your thesis, please contact me and let me know, thank you.
