@@ -9,9 +9,13 @@ Implement the Service-Oriented-Ipv4-Protocol based on OMNeT++/INET
 	Client-Server Application:
 		Architecture_1: The service header contains Service_ID and Client_ID
 		Architecture_2: The service header contains Service_ID
+![客户端-服务器网络仿真拓扑](https://user-images.githubusercontent.com/68048893/184666576-429c60be-5683-4a3e-916f-25b7ea63af9a.jpg)
+
 	Peer-to-Peer Application:
 		Architecture_3: The service header contains Service_ID and Client_ID
 		Architecture_4: The service header contains Service_ID
+![点对点网络仿真拓扑](https://user-images.githubusercontent.com/68048893/184666815-535bc1f7-9a3c-4308-9003-5d6d7b01520a.jpg)
+
 # Usage
 1. Copy the program files in the program folder to the same folder as the complete INET module source file path;
 2. If there is no corresponding path in the source file, create a new folder according to the path of the program file in the program folder, and then copy the program into it;
