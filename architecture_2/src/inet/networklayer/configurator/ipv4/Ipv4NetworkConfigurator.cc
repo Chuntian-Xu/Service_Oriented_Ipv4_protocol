@@ -46,7 +46,7 @@ Ipv4NetworkConfigurator::RouteInfo *Ipv4NetworkConfigurator::RoutingTableInfo::f
     return nullptr;
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::initialize(int stage) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::initialize(int stage)\n"; // new added
     NetworkConfiguratorBase::initialize(stage); // !!!
@@ -81,7 +81,7 @@ void Ipv4NetworkConfigurator::initialize(int stage) {
     }
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::computeConfiguration() {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::computeConfiguration() \n"; // new added
     EV_INFO << "Computing static network configuration (addresses and routes).\n";
@@ -125,7 +125,7 @@ void Ipv4NetworkConfigurator::computeConfiguration() {
     printElapsedTime("computeConfiguration", initializeStartTime);
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::ensureConfigurationComputed(Topology& topology) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::ensureConfigurationComputed(Topology& topology)\n"; // new added
     int NumNodes=topology.getNumNodes();
@@ -133,7 +133,7 @@ void Ipv4NetworkConfigurator::ensureConfigurationComputed(Topology& topology) {
     if (NumNodes == 0) computeConfiguration();
 }
 
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NetworkConfigurator::dumpConfiguration() {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::dumpConfiguration()\n"; // new added
     // print topology to module output
@@ -166,7 +166,7 @@ void Ipv4NetworkConfigurator::configureAllInterfaces() {
     }
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::configureInterface(InterfaceEntry *interfaceEntry) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureInterface(InterfaceEntry *interfaceEntry) \n"; // new added
     ensureConfigurationComputed(topology);
@@ -186,14 +186,14 @@ void Ipv4NetworkConfigurator::configureAllRoutingTables() {
     }
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::configureRoutingTable(IIpv4RoutingTable *routingTable) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureRoutingTable(IIpv4RoutingTable *routingTable) \n"; // new added
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); //统计网络拓扑中的Node个数
+    int NumNodes=topology.getNumNodes(); // count nodes in topology
     EV_INFO << "!!! NumNodes: " << NumNodes <<"\n"; // new added
-    //遍历每一个Node，为其配置RoutingTable
+    // iterate each node, configure RoutingTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->routingTable == routingTable) {
@@ -208,9 +208,9 @@ void Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable) \n";
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); //统计网络拓扑中的Node个数
+    int NumNodes=topology.getNumNodes(); // count nodes in topology
     EV_INFO << "!!! Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable)--> NumNodes: " << NumNodes <<"\n"; // new added
-    //遍历每一个Node，为其配置SidTable
+    // iterate each node, configure SidTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->sidTable == sidTable) {
@@ -225,9 +225,9 @@ void Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshor
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshoreTable) \n";
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); //统计网络拓扑中的Node个数
+    int NumNodes=topology.getNumNodes(); // count nodes in topology
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshoreTable)--> NumNodes: " << NumNodes <<"\n"; // new added
-    //遍历每一个Node，为其配置CidTable
+    // iterate each node, configure CidTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->cidshoreTable == cidshoreTable) {
@@ -246,7 +246,7 @@ void Ipv4NetworkConfigurator::configureRoutingTable(IIpv4RoutingTable *routingTa
             configureRoutingTable(node, interfaceEntry);
     }
 }
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::configureInterface(InterfaceInfo *interfaceInfo) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureInterface(InterfaceInfo *interfaceInfo)\n"; // new added
     EV_DETAIL << "Configuring network interface " << interfaceInfo->getFullPath() << ".\n";
@@ -263,7 +263,7 @@ void Ipv4NetworkConfigurator::configureInterface(InterfaceInfo *interfaceInfo) {
     EV_INFO << "!!!!!! IPAddress: "<<Ipv4Address(interfaceInfo->address)<<"\n"; // new added
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::configureRoutingTable(Node *node) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::configureRoutingTable(Node *node)\n"; // new added
     EV_DETAIL << "Configuring routing table of " << node->getModule()->getFullPath() << ".\n";
@@ -342,7 +342,7 @@ void Ipv4NetworkConfigurator::configureCidshoreTable(Node *node) {
     }
 }
 
-// ^-^OK^-^ 未被调用
+// ^-^OK^-^ not called
 void Ipv4NetworkConfigurator::configureRoutingTable(Node *node, InterfaceEntry *interfaceEntry) {
     EV_DETAIL << "!!! Configuring routing table of " << node->getModule()->getFullPath() << ".\n";// new added
     for (size_t i = 0; i < node->staticRoutes.size(); i++) {
@@ -719,7 +719,7 @@ void Ipv4NetworkConfigurator::readInterfaceConfiguration(Topology& topology) {
     using namespace xmlutils;
 
     std::set<InterfaceInfo *> interfacesSeen;
-    // configuration在NetworkConfiguratorBase::initialize(int stage)定义
+    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
     cXMLElementList interfaceElements = configuration->getChildrenByTagName("interface");
 
     for (auto & interfaceElement : interfaceElements) {
@@ -1178,10 +1178,10 @@ void Ipv4NetworkConfigurator::readMulticastGroupConfiguration(Topology& topology
     }
 }
 
-// ^-^OK^-^ 被调用
+// ^-^OK^-^ called
 void Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) \n"; // new added
-    // configuration在NetworkConfiguratorBase::initialize(int stage)定义
+    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
     cXMLElementList routeElements = configuration->getChildrenByTagName("route");
     for (auto & routeElement : routeElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*routeElement, "hosts");
@@ -1240,7 +1240,7 @@ void Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) {
 // new added
 void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) \n";
-    // configuration在NetworkConfiguratorBase::initialize(int stage)定义
+    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
     cXMLElementList sidElements = configuration->getChildrenByTagName("sid");
     for (auto & sidElement : sidElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*sidElement, "hosts");
@@ -1266,7 +1266,7 @@ void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
                     std::string hostFullPath = node->module->getFullPath();
                     std::string hostShortenedFullPath = hostFullPath.substr(hostFullPath.find('.') + 1);
                     if (atMatcher.matches(hostShortenedFullPath.c_str()) || atMatcher.matches(hostFullPath.c_str())) {
-                        InterfaceEntry *ie;
+                        InterfaceEntry *ie = nullptr;
                         // create and add sid
                         Ipv4Sid *ipv4Sid = new Ipv4Sid();
                         ipv4Sid->setSid(serviceId);
@@ -1289,7 +1289,7 @@ void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
 // new added
 void Ipv4NetworkConfigurator::readManualCidshoreConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualCidshoreConfiguration(Topology& topology) \n";  //new added
-    // configuration在NetworkConfiguratorBase::initialize(int stage)定义
+    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
     cXMLElementList cidshoreElements = configuration->getChildrenByTagName("cidshore");
     for (auto & cidshoreElement : cidshoreElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*cidshoreElement, "hosts");
@@ -1315,7 +1315,7 @@ void Ipv4NetworkConfigurator::readManualCidshoreConfiguration(Topology& topology
                     std::string hostFullPath = node->module->getFullPath();
                     std::string hostShortenedFullPath = hostFullPath.substr(hostFullPath.find('.') + 1);
                     if (atMatcher.matches(hostShortenedFullPath.c_str()) || atMatcher.matches(hostFullPath.c_str())) {
-                        InterfaceEntry *ie;
+                        InterfaceEntry *ie = nullptr;
                         // create and add cidshore
                         Ipv4Cidshore *ipv4Cidshore = new Ipv4Cidshore();
                         ipv4Cidshore->setIpaddr(ipaddr);
@@ -1563,7 +1563,7 @@ bool Ipv4NetworkConfigurator::containsRoute(const std::vector<Ipv4Route *>& rout
     return false;
 }
 
-// ^-^ 当addStaticRoutesParameter为true时被调用
+// ^-^ called when addStaticRoutesParameter is true
 void Ipv4NetworkConfigurator::addStaticRoutes(Topology& topology, cXMLElement *autorouteElement) {
 //    EV_INFO<<"Ipv4NetworkConfigurator::addStaticRoutes(Topology& topology, cXMLElement *autorouteElement)\n"; // new added
     // set node weights

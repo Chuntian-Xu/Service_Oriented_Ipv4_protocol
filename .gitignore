@@ -1,0 +1,8 @@
+out/
+*.o
+*.so
+*.elog
+*.sca
+*.vec
+*.vci
+results/

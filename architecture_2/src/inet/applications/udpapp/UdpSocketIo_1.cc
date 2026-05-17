@@ -108,13 +108,16 @@ void UdpSocketIo_1::socketDataArrived(UdpSocket *socket, Packet *packet)
 
 // new added
 void UdpSocketIo_1::CreatNewSocketAndReceive(){
+    if (receiveSocketBound) return;
     EV_INFO<< "!!! --> UdpSocketIo_1::CreatNewSocketAndReceive(Packet *packet)" << endl;
     socket_receive.setOutputGate(gate("socketOut"));
     setSocketOptions(&socket_receive); // new changed
+    socket_receive.setReuseAddress(true);
     const char *localAddress_receive = par("localAddress_receive");
     u_short localPort_receive = par("localPort_receive");
     EV_INFO<<"    --> localPort_receive: "<< localPort_receive << ", localAddress_receive " << localAddress_receive <<endl;
     socket_receive.bind(*localAddress_receive ? L3AddressResolver().resolve(localAddress_receive) : L3Address(), localPort_receive);
+    receiveSocketBound = true;
 }
 
 void UdpSocketIo_1::socketErrorArrived(UdpSocket *socket, Indication *indication)

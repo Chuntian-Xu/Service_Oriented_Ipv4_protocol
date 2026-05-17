@@ -101,39 +101,11 @@ void UdpSocketIo::setSocketOptions()
 
 void UdpSocketIo::socketDataArrived(UdpSocket *socket, Packet *packet)
 {
-    EV_INFO<< "!!! --> UdpSocketIo::socketDataArrived(UdpSocket *socket, Packet *packet)" << endl;
     emit(packetReceivedSignal, packet);
     EV_INFO << "Received packet: " << UdpSocket::getReceivedPacketInfo(packet) << endl;
     numReceived++;
     delete packet->removeTag<SocketInd>();
-//    send(packet, "trafficOut");  // new changed
-    CreatNewSocketAndReply(packet);  // new changed
-}
-
-// new added
-void UdpSocketIo::CreatNewSocketAndReply(Packet *packet){
-    if (!replySocketBound) {
-        EV_INFO<< "!!! --> UdpSocketIo::CreatNewSocketAndReply(Packet *packet)" << endl;
-        socket_reply.setOutputGate(gate("socketOut"));
-        socket_reply.setReuseAddress(true);
-        const char *localAddress_ = par("localAddress_");
-        u_short localPort = par("localPort");
-        u_short localPort_reply = localPort;
-        while(localPort_reply == localPort){
-            localPort_reply = (rand()%(65535-49152+1))+ 49152;
-        }
-        EV_INFO<<"    --> localPort_reply: "<< localPort_reply <<endl;
-        socket_reply.bind(*localAddress_ ? L3AddressResolver().resolve(localAddress_) : L3Address(), localPort_reply);
-        replySocketBound = true;
-    }
-    const char *destAddrs = par("destAddress");
-    u_short destPort = par("destPort");
-    EV_INFO<<"    --> destAddrs: "<< destAddrs <<endl;
-    EV_INFO<<"    --> destPort: "<< destPort <<endl;
-    packet->clearTags();
-    packet->trim();
-    packet->setName("UdpBasicAppData-0-reply");
-    socket_reply.sendTo(packet, *destAddrs ? L3AddressResolver().resolve(destAddrs) : L3Address(), destPort);
+    send(packet, "trafficOut");
 }
 
 void UdpSocketIo::socketErrorArrived(UdpSocket *socket, Indication *indication)
@@ -150,8 +122,8 @@ void UdpSocketIo::socketClosed(UdpSocket *socket)
 
 void UdpSocketIo::handleStartOperation(LifecycleOperation *operation)
 {
-    socket.setOutputGate(gate("socketOut")); // new changed
-    setSocketOptions(); // new changed
+    setSocketOptions();
+    socket.setOutputGate(gate("socketOut"));
     const char *localAddress = par("localAddress");
     socket.bind(*localAddress ? L3AddressResolver().resolve(localAddress) : L3Address(), par("localPort"));
     const char *destAddrs = par("destAddress");

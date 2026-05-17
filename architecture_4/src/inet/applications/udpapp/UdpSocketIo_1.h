@@ -12,6 +12,7 @@ class INET_API UdpSocketIo_1 : public ApplicationBase, public UdpSocket::ICallba
     bool dontFragment = false;
     UdpSocket socket;
     UdpSocket socket_receive;  // new added
+    bool receiveSocketBound = false;  // guard against repeated bind
     int numSent = 0;
     int numReceived = 0;
 

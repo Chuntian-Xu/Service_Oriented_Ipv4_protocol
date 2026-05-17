@@ -156,7 +156,6 @@ bool Ipv4SidTable::sidLessThan(const Ipv4Sid *a, const Ipv4Sid *b) const {
 
 void Ipv4SidTable::internalAddSid(Ipv4Sid *ipv4Sid) {
 //    EV_INFO << "!!! --> Ipv4SidTable::internalAddSid(Ipv4Sid *entry) \n"; // new added
-    if (!ipv4Sid->getInterface()) throw cRuntimeError("addIpv4Sid(): interface cannot be nullptr");
     // add to tables
     auto pos = upper_bound(sids.begin(), sids.end(), ipv4Sid, SidLessThan(*this));
     sids.insert(pos, ipv4Sid);
