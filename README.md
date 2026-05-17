@@ -15,14 +15,23 @@ Four self-contained INET 4.2.5 source overlays, each implementing a different so
 
 Key idea: replace IP-address-based routing with service-identifier-based (SID/CID) routing on the bandwidth-constrained maritime VHF air interface, reducing header overhead from 28 bytes (IPv4+UDP) to 2-3 bytes.
 
-## Requirements
+## Verified Environment
 
-| Component | Version |
-|-----------|---------|
-| OS | Ubuntu 18.04+ / Windows 10 |
-| OMNeT++ | 5.6.2 |
-| INET | 4.2.5 |
-| GCC | 7+ |
+The following environment has been fully tested — all 13 simulation scenarios pass.
+
+| Component | Version | Notes |
+|-----------|---------|-------|
+| OS | Ubuntu 22.04.5 LTS (WSL2) | Kernel 6.6.114.1-microsoft-standard-WSL2 |
+| OMNeT++ | 5.6.2 | Built from source: `PREFER_CLANG=no`, `WITH_OSGEARTH=no` |
+| INET | 4.2.5 | Modified per architecture |
+| GCC | 11.4.0 | Ubuntu 11.4.0-1ubuntu1~22.04.3 |
+| OpenJDK | 11.0.30 | Required for OMNeT++ IDE only |
+| CPU / RAM | 16 cores / 7.8 GB | WSL2 defaults |
+| IDE | OMNeT++ Eclipse | Requires `dmz-cursor-theme` on WSLg |
+
+**Original author's environment (from README):**
+- Windows 10 64-bit / Ubuntu 18.04.6 LTS
+- OMNeT++ 5.6.2, INET 4.2.5
 
 ## Quick Start
 
@@ -53,6 +62,9 @@ done
 ### 3. Build
 
 ```bash
+# Set OMNeT++ path (or export OMNETPP_ROOT)
+export OMNETPP_ROOT=/path/to/omnetpp-5.6.2
+
 # Build all architectures
 ./build.sh all
 
