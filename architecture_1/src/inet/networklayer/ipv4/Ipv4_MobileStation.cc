@@ -273,7 +273,7 @@ void Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) {
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     // "Prerouting"
-    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> ��ȡ ipv4Header
+    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> get  ipv4Header
     packet->addTagIfAbsent<NetworkProtocolInd>()->setProtocol(&Protocol::ipv4);
     packet->addTagIfAbsent<NetworkProtocolInd>()->setNetworkProtocolHeader(ipv4Header);
     if (!verifyCrc(ipv4Header)) {
@@ -739,7 +739,7 @@ void Ipv4_MobileStation::routeUnicastPacket(Packet *packet) {
     }
 }
 
-// called after FORWARD Hook (used for reinject, too) ·
+// called after FORWARD Hook (used for reinject, too) 
 void Ipv4_MobileStation::routeUnicastPacketFinish(Packet *packet) {
     EV_INFO <<"!!! --> Ipv4_MobileStation::routeUnicastPacketFinish(Packet *packet) \n"; // new added
     EV_INFO<<"    --> packet: "<<packet<<"\n"; // new added

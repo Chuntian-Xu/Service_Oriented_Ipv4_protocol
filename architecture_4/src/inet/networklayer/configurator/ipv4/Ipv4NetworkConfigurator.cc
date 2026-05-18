@@ -191,9 +191,9 @@ void Ipv4NetworkConfigurator::configureRoutingTable(IIpv4RoutingTable *routingTa
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureRoutingTable(IIpv4RoutingTable *routingTable) \n"; // new added
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); // count nodes in topology
+    int NumNodes=topology.getNumNodes(); //count Node nodes in topology
     EV_INFO << "!!! NumNodes: " << NumNodes <<"\n"; // new added
-    // iterate each node, configure RoutingTable
+    // iterate each node, configure its RoutingTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->routingTable == routingTable) {
@@ -208,9 +208,9 @@ void Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable) {
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable) \n";
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); // count nodes in topology
+    int NumNodes=topology.getNumNodes(); //count Node nodes in topology
     EV_INFO << "!!! Ipv4NetworkConfigurator::configureSidTable(IIpv4SidTable *sidTable)--> NumNodes: " << NumNodes <<"\n"; // new added
-    // iterate each node, configure SidTable
+    // iterate each node, configure its SidTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->sidTable == sidTable) {
@@ -225,9 +225,9 @@ void Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshor
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshoreTable) \n";
     ensureConfigurationComputed(topology);
     // TODO: avoid linear search
-    int NumNodes=topology.getNumNodes(); // count nodes in topology
+    int NumNodes=topology.getNumNodes(); //count Node nodes in topology
     EV_INFO << "!!! --> Ipv4NetworkConfigurator::configureCidshoreTable(IIpv4CidshoreTable *cidshoreTable)--> NumNodes: " << NumNodes <<"\n"; // new added
-    // iterate each node, configure CidTable
+    // iterate each node, configure its CidTable
     for (int i = 0; i < NumNodes; i++) {
         Node *node = (Node *)topology.getNode(i);
         if (node->cidshoreTable == cidshoreTable) {
@@ -719,7 +719,7 @@ void Ipv4NetworkConfigurator::readInterfaceConfiguration(Topology& topology) {
     using namespace xmlutils;
 
     std::set<InterfaceInfo *> interfacesSeen;
-    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
+    // configurationin NetworkConfiguratorBase::initialize(int stage)defined 
     cXMLElementList interfaceElements = configuration->getChildrenByTagName("interface");
 
     for (auto & interfaceElement : interfaceElements) {
@@ -1181,7 +1181,7 @@ void Ipv4NetworkConfigurator::readMulticastGroupConfiguration(Topology& topology
 // ^-^OK^-^ called
 void Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) \n"; // new added
-    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
+    // configurationin NetworkConfiguratorBase::initialize(int stage)defined 
     cXMLElementList routeElements = configuration->getChildrenByTagName("route");
     for (auto & routeElement : routeElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*routeElement, "hosts");
@@ -1240,7 +1240,7 @@ void Ipv4NetworkConfigurator::readManualRouteConfiguration(Topology& topology) {
 // new added
 void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) \n";
-    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
+    // configurationin NetworkConfiguratorBase::initialize(int stage)defined 
     cXMLElementList sidElements = configuration->getChildrenByTagName("sid");
     for (auto & sidElement : sidElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*sidElement, "hosts");
@@ -1289,7 +1289,7 @@ void Ipv4NetworkConfigurator::readManualSidConfiguration(Topology& topology) {
 // new added
 void Ipv4NetworkConfigurator::readManualCidshoreConfiguration(Topology& topology) {
     EV_INFO<<"!!! --> Ipv4NetworkConfigurator::readManualCidshoreConfiguration(Topology& topology) \n";  //new added
-    // configuration defined in NetworkConfiguratorBase::initialize(int stage)
+    // configurationin NetworkConfiguratorBase::initialize(int stage)defined 
     cXMLElementList cidshoreElements = configuration->getChildrenByTagName("cidshore");
     for (auto & cidshoreElement : cidshoreElements) {
         const char *hostAttr = xmlutils::getMandatoryFilledAttribute(*cidshoreElement, "hosts");

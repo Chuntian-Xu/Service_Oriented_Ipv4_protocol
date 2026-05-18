@@ -80,7 +80,7 @@ class INET_API ServiceId {
     void set(int i0, int i1);
 
     /**
-     * ServiceId given as text: "10.1" 点分十进制表示
+     * ServiceId given as text: "10.1" dotted decimal notation
      */
     void set(const char *t);
     //@}

@@ -53,6 +53,7 @@ void UdpEchoApp::socketDataArrived(UdpSocket *socket, Packet *pk)
     numEchoed++;
     emit(packetSentSignal, pk);
     // send back
+    // send back
     std::string name = pk->getFullName();
     std::string name_reply = name+"-reply";
     pk->setName(name_reply.c_str());

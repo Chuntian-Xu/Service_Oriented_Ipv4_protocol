@@ -26,7 +26,7 @@ module MyApplicationLayerNodeBase_Udp_Ipv6 extends MyTransportLayerNodeBase_Udp_
         @figure[applicationLayer.title](type=text; pos=1245,11; anchor=ne; text="application layer");
 
     submodules:
-        UdpApp[numApps]: <default("UdpBasicApp")> like IApp {  //如果没有指定，则默认App类型为UdpBasicApp
+        UdpApp[numApps]: <default("UdpBasicApp")> like IApp {  //if not specified, default app type is UdpBasicApp
             parameters:
                 @display("p=670.8,35.1,row,150");
         }

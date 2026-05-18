@@ -270,7 +270,7 @@ void Ipv4_MobileStation::handleIncomingDatagram(Packet *packet) {
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     // "Prerouting"
-    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> ��ȡ ipv4Header
+    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> get  ipv4Header
     packet->addTagIfAbsent<NetworkProtocolInd>()->setProtocol(&Protocol::ipv4);
     packet->addTagIfAbsent<NetworkProtocolInd>()->setNetworkProtocolHeader(ipv4Header);
     if (!verifyCrc(ipv4Header)) {

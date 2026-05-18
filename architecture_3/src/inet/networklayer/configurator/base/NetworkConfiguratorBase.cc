@@ -49,7 +49,7 @@ NetworkConfiguratorBase::InterfaceInfo::InterfaceInfo(Node *node, LinkInfo *link
     addSubnetRoute = true;
 }
 
-// ^-^ 被调用
+// ^-^ called
 void NetworkConfiguratorBase::initialize(int stage) {
     EV_INFO << "!!! --> NetworkConfiguratorBase::initialize(int stage) \n";// new added
     if (stage == INITSTAGE_LOCAL) {// stage0
@@ -273,7 +273,7 @@ bool NetworkConfiguratorBase::isBridgeNode(Node *node)
 
 bool NetworkConfiguratorBase::isWirelessInterface(InterfaceEntry *interfaceEntry)
 {
-//    return !strncmp(interfaceEntry->getInterfaceName(), "wlan", 4);  // 改成下面这行
+//    return !strncmp(interfaceEntry->getInterfaceName(), "wlan", 4);  // replaced with line below
     return (!strncmp(interfaceEntry->getInterfaceName(), "wlan", 4)) || (!strncmp(interfaceEntry->getInterfaceName(), "wmtc", 4));  // new added
 }
 

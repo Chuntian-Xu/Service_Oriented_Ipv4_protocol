@@ -153,7 +153,7 @@ void Udp::processPacketFromIpLayer(Packet *packet)
 {
     EV_INFO<<"!!! --> Udp::processPacketFromIpLayer(Packet *packet)"<<endl; // new added
     EV_INFO<<"    --> packet: "<< packet <<endl; // new added
-    //---------------- 封装Udp报头 ----------------
+    //---------------- encapsulate UDP header ----------------
     auto portsReq = packet->findTag<L4PortReq>();
     short srcPort = portsReq->getSrcPort();
     short destPort = portsReq->getDestPort();
@@ -1082,7 +1082,7 @@ bool Udp::verifyCrc(const Protocol *networkProtocol, const Ptr<const UdpHeader>&
 Udp::SockDesc *Udp::findSocketForUnicastPacket(const L3Address& localAddr, ushort localPort, const L3Address& remoteAddr, ushort remotePort)
 {
     EV_INFO<<"!!! --> Udp::findSocketForUnicastPacket(const L3Address& localAddr, ushort localPort, const L3Address& remoteAddr, ushort remotePort)" << endl; // new added
-    // 首先查找是否存在绑定到localPort上的socket，如果没有则将报文丢弃
+    // first check if exists in bound to localPort锛宒iscard packet if none found
     auto it = socketsByPortMap.find(localPort);
     if (it == socketsByPortMap.end()){
         EV_INFO<<"    --> can not find SockDescList with localPort " << localPort <<endl; // new added
@@ -1092,11 +1092,11 @@ Udp::SockDesc *Udp::findSocketForUnicastPacket(const L3Address& localAddr, ushor
     // select the socket bound to ANY_ADDR only if there is no socket bound to localAddr
     SockDescList& list = it->second;
     SockDesc *socketBoundToAnyAddress = nullptr;
-    // 遍历所有绑定到localPort上的socket
+    // iterate all sockets bound to localPortsocket
     for (SockDescList::reverse_iterator it = list.rbegin(); it != list.rend(); ++it) {
         SockDesc *sd = *it;
-        // 如果该socket只绑定了localPort,而该socket描述符中localAddr,remoteAddr,remotePort参数都未设置,或者都设置了但是有一个以上的参数对不上,则直接返回此socket
-        // 否则,返回那个不仅绑定了localPort,而且该socket描述符中localAddr,remoteAddr,remotePort这三个参数至少有设置了一个的socket
+        // return socket if only localPort is bound and addr/port params are all unset, or if there is a mismatch
+        // otherwise return socket bound to localPort that has at least one of localAddr/remoteAddr/remotePort set
         if (sd->onlyLocalPortIsSet || (
                 (sd->remotePort == -1 || sd->remotePort == remotePort) &&
                 (sd->localAddr.isUnspecified() || sd->localAddr == localAddr) &&
@@ -1121,27 +1121,27 @@ std::vector<Udp::SockDesc *> Udp::findSocketsForMcastBcastPacket(const L3Address
     EV_INFO<<"!!! --> Udp::findSocketsForMcastBcastPacket(const L3Address& localAddr, ushort localPort, const L3Address& remoteAddr, ushort remotePort, bool isMulticast, bool isBroadcast)"<<endl;  // new added
     ASSERT(isMulticast || isBroadcast);
     std::vector<SockDesc *> result;
-    // 找到所有绑定到localPort上的socket
+    // find all sockets bound to localPort
     auto it = socketsByPortMap.find(localPort);
     if (it == socketsByPortMap.end())
         return result;
 
-    // 遍历所有绑定到localPort上的socket
+    // iterate all sockets bound to localPortsocket
     SockDescList& list = it->second;
     for (auto sd : list) {
-        // 如果是广播报文
+        // if this is a broadcast packet
         if (isBroadcast) {
-            // 如果该socket描述符中的receiveBroadcast选项被设置为true，即该socket被设置为可以接收广播报文
+            // if receiveBroadcast option is true, i.e. this socket can receive broadcast packets
             if (sd->isBroadcast) {
-                // socket描述符中的remotePort和remoteAddr参数，如果都没有设置，或者有一个设置了另一个没设置，就将该socket加到result中去
-                // 如果都设置了，但是有一个对不上，就不将该socket加到result中去
+                // if neither remotePort nor remoteAddr is set, or only one is set, add socket to result
+                // if both are set but do not match, exclude socket from result
                 if ((sd->remotePort == -1 || sd->remotePort == remotePort) &&
                     (sd->remoteAddr.isUnspecified() || sd->remoteAddr == remoteAddr)){
                     result.push_back(sd);
                 }
             }
         }
-        // 如果是多播报文
+        // if this is a multicast packet
         else if (isMulticast) {
             auto membership = sd->findFirstMulticastMembership(localAddr);
             if (membership != sd->multicastMembershipTable.end()) {

@@ -108,8 +108,8 @@ void UdpSocketIo_1::socketDataArrived(UdpSocket *socket, Packet *packet)
 
 // new added
 void UdpSocketIo_1::CreatNewSocketAndReceive(){
-    if (receiveSocketBound) return;
     EV_INFO<< "!!! --> UdpSocketIo_1::CreatNewSocketAndReceive(Packet *packet)" << endl;
+    if (receiveSocketBound) return;
     socket_receive.setOutputGate(gate("socketOut"));
     setSocketOptions(&socket_receive); // new changed
     socket_receive.setReuseAddress(true);

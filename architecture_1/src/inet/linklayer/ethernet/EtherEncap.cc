@@ -147,8 +147,8 @@ void EtherEncap::processPacketFromHigherLayer(Packet *packet)
         Ieee8022Llc::encapsulate(packet);
         typeOrLength = packet->getByteLength();
     }
-    // 组装ethHeader
-    auto macAddressReq = packet->getTag<MacAddressReq>();  // 获取离开EtherEncap协议模块的报文的MacAddressTag(macAddressReq)
+    // assemble ethHeader
+    auto macAddressReq = packet->getTag<MacAddressReq>();  // get EtherEncappacket leaving protocol module: MacAddressTag(macAddressReq)
 //    EV_INFO<<"    --> macAddressReq = packet->getTag<MacAddressReq>()"<<endl;  // new added
 //    EV_INFO<<"    --> src mac Address: "<<macAddressReq->getSrcAddress()<<endl; // new added
 //    EV_INFO<<"    --> dest mac Address: "<<macAddressReq->getDestAddress()<<endl; // new added

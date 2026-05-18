@@ -408,7 +408,7 @@ void Ipv4::handlePacketFromHL(Packet *packet)
     EV_INFO << "Received " << packet << " from upper layer.\n";
     emit(packetReceivedFromUpperSignal, packet);
 
-    // if no interface exists, do not send datagram  检查模块的InterfaceTable
+    // if no interface exists, do not send datagram  check module: InterfaceTable
     if (ift->getNumInterfaces() == 0) {
         EV_ERROR << "No interfaces exist, dropping packet\n";
         numDropped++;
@@ -551,8 +551,8 @@ const InterfaceEntry *Ipv4::determineOutgoingInterfaceForMulticastDatagram(const
 void Ipv4::routeUnicastPacket(Packet *packet)
 {
     EV_INFO<<"!!! --> Ipv4::routeUnicastPacket(Packet *packet)"<<endl;  // new added
-    const InterfaceEntry *fromIE = getSourceInterface(packet);  // 模块入口(Tag: InterfaceInd)
-    const InterfaceEntry *destIE = getDestInterface(packet);  // 模块出口(Tag: InterfaceReq)
+    const InterfaceEntry *fromIE = getSourceInterface(packet);  // module input (InterfaceInd tag)(Tag: InterfaceInd)
+    const InterfaceEntry *destIE = getDestInterface(packet);  // module output (InterfaceReq tag)(Tag: InterfaceReq)
     Ipv4Address nextHopAddress = getNextHop(packet);
 
     const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();
@@ -577,9 +577,9 @@ void Ipv4::routeUnicastPacket(Packet *packet)
     }
     else {
         // use Ipv4 routing (lookup in routing table)
-        const Ipv4Route *re = rt->findBestMatchingRoute(destAddr); // 获取最佳路由
+        const Ipv4Route *re = rt->findBestMatchingRoute(destAddr); // find best matching route
         if (re) {
-            destIE = re->getInterface();  // 从最佳路由中获取模块出口(Tag: InterfaceReq)
+            destIE = re->getInterface();  // resolve output interface from best matching route (InterfaceReq tag)(Tag: InterfaceReq)
             packet->addTagIfAbsent<InterfaceReq>()->setInterfaceId(destIE->getInterfaceId());
             packet->addTagIfAbsent<NextHopAddressReq>()->setNextHopAddress(re->getGateway());
 
@@ -1125,7 +1125,7 @@ void Ipv4::sendDatagramToOutput(Packet *packet)
         }
         else {
             ASSERT2(pendingPackets.find(nextHopAddr) == pendingPackets.end(), "Ipv4-ARP error: nextHopAddr found in ARP table, but Ipv4 queue for nextHopAddr not empty");
-            packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);  // 给离开Ipv4协议模块的报文加MacAddressTag(MacAddressReq)
+            packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);  // add tag to packet leaving Ipv4 protocol module: MacAddressTag(MacAddressReq)
             EV_INFO<<"    --> packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr)"<<endl;  // new added
             sendPacketToNIC(packet);
         }

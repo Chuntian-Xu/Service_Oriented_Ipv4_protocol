@@ -9,7 +9,7 @@ simple Ipv4NetworkConfigurator extends NetworkConfiguratorBase {
         @class(Ipv4NetworkConfigurator);
         @display("i=block/cogwheel");
         
-        // !!! ^-^ 路由配置文件
+        // !!! ^-^ route configuration file
         xml config = default(xml("<config><interface hosts='**' address='10.x.x.x' netmask='255.x.x.x'/></config>")); // XML configuration parameters for IP address assignment and adding manual routes
         
         bool assignAddresses = default(true); // assign IP addresses to all interfaces in the network

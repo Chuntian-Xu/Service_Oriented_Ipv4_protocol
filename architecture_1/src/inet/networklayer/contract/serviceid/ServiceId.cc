@@ -9,7 +9,7 @@ static const int SERVICEID_STRING_SIZE = 20;
 // predefined Sid
 const ServiceId ServiceId::UNSPECIFIED_MTC_Sid;
 
-// 点分十进制表示
+// dotted decimal notation
 //bool ServiceId::parseServiceId(const char *text, unsigned char tobytes[]) {
 //    if (!text) return false;
 //
@@ -58,7 +58,7 @@ void ServiceId::set(int i0, int i1) {
     addr = (i0 << 8) | i1;
 }
 
-// 点分十进制表示
+// dotted decimal notation
 //void ServiceId::set(const char *text) {
 //    EV_INFO<<"!!! -> ServiceId::set(const char *text)\n";
 //    unsigned char buf[2];
@@ -84,7 +84,7 @@ ServiceId::SidCategory ServiceId::getSidCategory() const {
     return UNSPECIFIED_MTC;
 }
 
-// 点分十进制表示
+// dotted decimal notation
 //std::string ServiceId::str(bool printUnspec    /* = true */) const {
 //    if (printUnspec && isUnspecified()) return std::string("<unspec>");
 //    char buf[SERVICEID_STRING_SIZE];

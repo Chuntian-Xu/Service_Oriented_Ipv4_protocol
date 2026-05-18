@@ -22,8 +22,8 @@ simple UdpSocketIo
 {
     parameters:
         string interfaceTableModule;
-        string localAddress_ = default("");  // 设置本机的IP地址
-        string localAddress = default("");  // 设置的套接字的IP地址
+        string localAddress_ = default("");  // local IPaddress
+        string localAddress = default("");  // socket IPaddress
         int localPort = default(-1);
         string destAddress = default("");
         int destPort;

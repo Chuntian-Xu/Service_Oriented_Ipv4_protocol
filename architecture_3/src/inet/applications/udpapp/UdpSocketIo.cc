@@ -112,18 +112,18 @@ void UdpSocketIo::socketDataArrived(UdpSocket *socket, Packet *packet)
 
 // new added
 void UdpSocketIo::CreatNewSocketAndReply(Packet *packet){
+    EV_INFO<< "!!! --> UdpSocketIo::CreatNewSocketAndReply(Packet *packet)" << endl;
     if (!replySocketBound) {
-        EV_INFO<< "!!! --> UdpSocketIo::CreatNewSocketAndReply(Packet *packet)" << endl;
-        socket_reply.setOutputGate(gate("socketOut"));
+    socket_reply.setOutputGate(gate("socketOut"));
         socket_reply.setReuseAddress(true);
-        const char *localAddress_ = par("localAddress_");
-        u_short localPort = par("localPort");
-        u_short localPort_reply = localPort;
-        while(localPort_reply == localPort){
-            localPort_reply = (rand()%(65535-49152+1))+ 49152;
-        }
-        EV_INFO<<"    --> localPort_reply: "<< localPort_reply <<endl;
-        socket_reply.bind(*localAddress_ ? L3AddressResolver().resolve(localAddress_) : L3Address(), localPort_reply);
+    const char *localAddress_ = par("localAddress_");
+    u_short localPort = par("localPort");
+    u_short localPort_reply = localPort;
+    while(localPort_reply == localPort){
+        localPort_reply = (rand()%(65535-49152+1))+ 49152;
+    }
+    EV_INFO<<"    --> localPort_reply: "<< localPort_reply <<endl;
+    socket_reply.bind(*localAddress_ ? L3AddressResolver().resolve(localAddress_) : L3Address(), localPort_reply);
         replySocketBound = true;
     }
     const char *destAddrs = par("destAddress");

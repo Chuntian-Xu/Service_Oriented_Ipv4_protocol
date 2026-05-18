@@ -153,7 +153,7 @@ void Udp::processPacketFromIpLayer(Packet *packet)
 {
     EV_INFO<<"!!! --> Udp::processPacketFromIpLayer(Packet *packet)"<<endl; // new added
     EV_INFO<<"    --> packet: "<< packet <<endl; // new added
-    //---------------- 封装Udp报头 ----------------
+    //---------------- encapsulate UDP header ----------------
     auto portsReq = packet->findTag<L4PortReq>();
     short srcPort = portsReq->getSrcPort();
     short destPort = portsReq->getDestPort();

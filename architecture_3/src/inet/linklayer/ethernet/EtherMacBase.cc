@@ -426,7 +426,7 @@ void EtherMacBase::refreshConnection()
         processConnectDisconnect();
 }
 
-// 丢弃掉目的MAC地址不是本机MAC地址的frame
+// discard frames whose destination MAC address does not match local MAC address
 bool EtherMacBase::dropFrameNotForUs(Packet *packet, const Ptr<const EthernetMacHeader>& frame)
 {
     EV_INFO<<"!!! --> bool EtherMacBase::dropFrameNotForUs(Packet *packet, const Ptr<const EthernetMacHeader>& frame)"<<"\n"; // new added

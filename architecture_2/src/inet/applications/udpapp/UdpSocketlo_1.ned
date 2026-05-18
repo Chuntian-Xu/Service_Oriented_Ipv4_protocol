@@ -22,12 +22,12 @@ simple UdpSocketIo_1
 {
     parameters:
         string interfaceTableModule;
-        string localAddress = default("");  // 设置本机的IP地址
-        int localPort = default(-1);  // 设置本机用于发送报文的socket端口
-        string destAddress = default("");  // 设置本机的发送报文的目的IP地址
-        int destPort;  // 设置本机的发送报文的目的端口
-        string localAddress_receive = default("");  // 设置本机所在本地网络的广播IP地址
-        int localPort_receive = default(-1); // 设置本机用于接收报文的socket端口
+        string localAddress = default("");  // local IPaddress
+        int localPort = default(-1);  // local socket socketport for sending
+        string destAddress = default("");  // destination IP address
+        int destPort;  // local destination port for sending
+        string localAddress_receive = default("");  // broadcast IP address of local network
+        int localPort_receive = default(-1); // local socket socketport for sending
 
         int timeToLive = default(-1); // if not -1, set the TTL (IPv4) or Hop Limit (IPv6) field of sent packets to this value
         bool dontFragment = default(false); // if true, asks IP to not fragment the message during routing

@@ -220,7 +220,7 @@ void EtherMacFullDuplex::processMsgFromNetwork(EthernetSignal *signal)
         delete packet;
         return;
     }
-    // 解析出报文的MacHeader，并判断MAC地址是否和本机Mac地址相同 new added
+    // parse packet's MacHeader锛宎nd check if MACaddress matches local Macaddress new added
     const auto& frame = packet->peekAtFront<EthernetMacHeader>();
     if (dropFrameNotForUs(packet, frame)) return;
 

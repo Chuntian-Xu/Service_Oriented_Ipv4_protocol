@@ -132,17 +132,17 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
      * Computes the Ipv4 network configuration for all nodes in the network.
      * The result of the computation is only stored in the network configurator.
      */
-    virtual void computeConfiguration(); // ^-^OK^-^ 被调用
+    virtual void computeConfiguration(); // ^-^OK^-^ called
 
     /**
      * Configures all interfaces in the network based on the current network configuration.
      */
-    virtual void configureAllInterfaces();// ^-^OK^-^ 被调用
+    virtual void configureAllInterfaces();// ^-^OK^-^ called
 
     /**
      * Configures the provided interface based on the current network configuration.
      */
-    virtual void configureInterface(InterfaceEntry *interfaceEntry);// ^-^OK^-^ 被调用
+    virtual void configureInterface(InterfaceEntry *interfaceEntry);// ^-^OK^-^ called
 
     /**
      * Configures all routing tables in the network based on the current network configuration.
@@ -152,7 +152,7 @@ class INET_API Ipv4NetworkConfigurator : public NetworkConfiguratorBase {
     /**
      * Configures the provided routing table based on the current network configuration.
      */
-    virtual void configureRoutingTable(IIpv4RoutingTable *routingTable);// ^-^OK^-^ 被调用
+    virtual void configureRoutingTable(IIpv4RoutingTable *routingTable);// ^-^OK^-^ called
 
     virtual void configureSidTable(IIpv4SidTable *sidTable);// new added
     virtual void configureCidshoreTable(IIpv4CidshoreTable *cidshoreTable);// new added

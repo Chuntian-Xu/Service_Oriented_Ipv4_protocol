@@ -269,7 +269,7 @@ void Ipv4_ShoreStation::handleIncomingDatagram(Packet *packet) {
     int interfaceId = packet->getTag<InterfaceInd>()->getInterfaceId();
     emit(packetReceivedFromLowerSignal, packet);
     // "Prerouting"
-    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> ��ȡ ipv4Header
+    const auto& ipv4Header = packet->peekAtFront<Ipv4Header>();  // !!!--> get  ipv4Header
     packet->addTagIfAbsent<NetworkProtocolInd>()->setProtocol(&Protocol::ipv4);
     packet->addTagIfAbsent<NetworkProtocolInd>()->setNetworkProtocolHeader(ipv4Header);
     if (!verifyCrc(ipv4Header)) {
@@ -1309,7 +1309,7 @@ void Ipv4_ShoreStation::sendDatagramToOutput_Service(Packet *packet) {
     EV_INFO<<"    --> out Interface Mac Address: "<< ie->getMacAddress() <<"\n";// new added
     MacAddress nextHopMacAddr = MMSI;
     EV_INFO<<"    --> nextHopMacAddr: "<< nextHopMacAddr <<"\n";// new added
-    packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);  // ��packet���Tag: MacAddressReq
+    packet->addTagIfAbsent<MacAddressReq>()->setDestAddress(nextHopMacAddr);  // add tag to packet: : MacAddressReq
     sendPacketToNIC_Service(packet);
 }
 

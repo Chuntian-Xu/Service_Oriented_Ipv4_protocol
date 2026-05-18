@@ -19,32 +19,32 @@ Ipv4NodeConfigurator::Ipv4NodeConfigurator() { // constructor
     cidshoreTable = nullptr;// new added
 }
 
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NodeConfigurator::initialize(int stage) {
     EV_INFO<<"!!! --> Ipv4NodeConfigurator::initialize(int stage) \n";  // new added
     cSimpleModule::initialize(stage);
 
     if (stage == INITSTAGE_LOCAL) {  // stage0
         EV_INFO << "    --> stage0 INITSTAGE_LOCAL !!! --> Ipv4NodeConfigurator::initialize(int stage) \n"; // new added
-        cModule *node = getContainingNode(this); // 获取在该stage下配置的node
+        cModule *node = getContainingNode(this); // get the node configured at this stage
         EV_INFO << "    --> nodeName: "<<node->getFullName()<<"\n"; // new added
-        const char *networkConfiguratorPath = par("networkConfiguratorModule");// 获取在该stage下的配置module路径
+        const char *networkConfiguratorPath = par("networkConfiguratorModule");// get the stagemodule path at this stage
         EV_INFO << "    --> networkConfiguratorPath: "<<networkConfiguratorPath<<"\n";// new added
         nodeStatus = dynamic_cast<NodeStatus *>(node->getSubmodule("status"));
 
-        interfaceTable = getModuleFromPar<IInterfaceTable>(par("interfaceTableModule"), this);  // !!! 获取interfaceTableModule
-        routingTable = getModuleFromPar<IIpv4RoutingTable>(par("routingTableModule"), this);  // !!! 获取routingTableModule
+        interfaceTable = getModuleFromPar<IInterfaceTable>(par("interfaceTableModule"), this);  // !!! get interfaceTableModule
+        routingTable = getModuleFromPar<IIpv4RoutingTable>(par("routingTableModule"), this);  // !!! get routingTableModule
         EV_INFO<<"    --> get interfaceTable: "<<interfaceTable->getNumInterfaces() <<"\n";  // new added
-        EV_INFO<<"    --> get routingTable: "<<routingTable->getNumRoutes() <<"\n";  // new added 理解为什么要设置IIpv4RoutingTable.h这个文件？
+        EV_INFO<<"    --> get routingTable: "<<routingTable->getNumRoutes() <<"\n";  // new added (why is IIpv4RoutingTable.h needed?)
 
-        sidTable = getModuleFromPar<IIpv4SidTable>(par("sidTableModule"), this);  // !!! 获取sidTableModule
+        sidTable = getModuleFromPar<IIpv4SidTable>(par("sidTableModule"), this);  // !!! get sidTableModule
         EV_INFO<< "    --> get sidTable: " << sidTable->getNumSids() <<"\n";  // new added
-        cidshoreTable = getModuleFromPar<IIpv4CidshoreTable>(par("cidshoreTableModule"), this);  // !!! 获取cidshoreTableModule
+        cidshoreTable = getModuleFromPar<IIpv4CidshoreTable>(par("cidshoreTableModule"), this);  // !!! get cidshoreTableModule
         EV_INFO<< "    --> get cidshoreTable: " << cidshoreTable->getNumCidshores() <<"\n";  // new added
 
         if (!networkConfiguratorPath[0]) networkConfigurator = nullptr;
         else {
-            cModule *module = getModuleByPath(networkConfiguratorPath); // 获取在该stage的配置module
+            cModule *module = getModuleByPath(networkConfiguratorPath); // get the configured module at this stage
             EV_INFO << "    --> ModuleName: "<< module->getFullName() <<"\n"; // new added
             if (!module) throw cRuntimeError("Configurator module '%s' not found (check the 'networkConfiguratorModule' parameter)", networkConfiguratorPath);
             networkConfigurator = check_and_cast<Ipv4NetworkConfigurator *>(module);
@@ -112,15 +112,15 @@ bool Ipv4NodeConfigurator::handleOperationStage(LifecycleOperation *operation, I
     return true;
 }
 
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NodeConfigurator::prepareAllInterfaces() {
     EV_INFO<<"!!! --> Ipv4NodeConfigurator::prepareAllInterfaces() \n"; // new added
-    int NumInterfaces = interfaceTable->getNumInterfaces();//获取接口个数
+    int NumInterfaces = interfaceTable->getNumInterfaces();//get interface count
     EV_INFO<<"!!! NumInterfaces: "<<NumInterfaces<<"\n"; // new added
-    // 遍历并配置每个接口
+    // iterate and configure each interface
     for (int i = 0; i < NumInterfaces; i++) prepareInterface(interfaceTable->getInterface(i));
 }
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NodeConfigurator::prepareInterface(InterfaceEntry *interfaceEntry) {
     EV_INFO<<"!!! --> Ipv4NodeConfigurator::prepareInterface(InterfaceEntry *interfaceEntry) \n"; // new added
      ASSERT(!interfaceEntry->getProtocolData<Ipv4InterfaceData>());
@@ -144,7 +144,7 @@ void Ipv4NodeConfigurator::prepareInterface(InterfaceEntry *interfaceEntry) {
         }
     }
 }
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NodeConfigurator::configureAllInterfaces() {
     EV_INFO<<"!!! --> Ipv4NodeConfigurator::configureAllInterfaces()\n"; // new added
     ASSERT(networkConfigurator);
@@ -153,7 +153,7 @@ void Ipv4NodeConfigurator::configureAllInterfaces() {
     for (int i = 0; i < NumInterfaces; i++) networkConfigurator->configureInterface(interfaceTable->getInterface(i));
 }
 
-// ^-^ 被调用
+// ^-^ called
 void Ipv4NodeConfigurator::configureRoutingTable() {
     EV_INFO<<"!!! --> Ipv4NodeConfigurator::configureRoutingTable()\n"; // new added
     ASSERT(networkConfigurator);
